@@ -8,15 +8,13 @@ var db = require("../db/index.js");
 // for Home Component - from searchRecipes function
 exports.searchRecipes = function(req, res) {
   var searchTerm = req.body.searchTerm;
- 
   // regex -> allows the search to contain string instead of === string
   // options i -> allows search to be case insensitive
   db.Recipe.find({name:{'$regex' : searchTerm, '$options' : 'i'}})
     .exec(function (err, recipe) {
-      if (err) 
-      	{
-      	  return err;
-      	} else {
+      if (err) {
+        return err;
+      } else {
       	res.json(recipe);
       }
 	});
@@ -46,12 +44,14 @@ exports.getUserRecipes = function(req, res) {
 
 exports.addRecipe = function(req, res) {
   if (req.user) {
+    console.log('user>>>>>\n',req.user);
+    console.log('body>>>>>\n',req.body);
     req.body._creator = req.user._id;
-
     // create recipe in database
     let recipeId;
     db.Recipe.create(req.body).then((recipe) => {
       // push recipe into user's recipes array
+      console.log('recipe>>>>>\n',recipe);
       recipeId = recipe.id;
       db.User.findByIdAndUpdate(req.user._id, {$push: {recipes: recipe.id}})
       .then(() => {

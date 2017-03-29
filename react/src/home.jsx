@@ -25,10 +25,7 @@ class Home extends React.Component {
       url: '/searchRecipes',
       type:'POST',
       data: JSON.stringify(searchTerm),
-      // type: 'GET',
-      // data: searchTerm,
       contentType: 'application/json',
-      // upon success, adds results to this.state.recipes
       success: function(data){
         console.log('ajax request to search recipes was successful!');
         console.log('response', data);

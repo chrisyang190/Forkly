@@ -101,7 +101,13 @@ class AddRecipe extends React.Component {
 
           <h3 className="recipeName">Recipe Name:</h3> 
           <input type="text" value={this.state.name} name="name" onChange={this.handleInputChange}/>
+      
           <br />
+
+          <h3 className="addTag">Tags:</h3>
+          <input type="text" name="tags"/>
+          <input type="button" name="addTag" value="Add Tag" />
+
           <br />
         
           <h3 className="title">Ingredients:</h3>
@@ -114,7 +120,16 @@ class AddRecipe extends React.Component {
               </tr>
             </thead>
             {this.state.ingredients.map(function(val, index) {
-               return <AddRecipeIngredients key={index} index={index} quantity={val.quantity} units={val.units} ingredient={val.ingredient} showButton={val.showButton} addRow={this.addRow} handleIngredientsChange={this.handleIngredientsChange}/>;
+               return <AddRecipeIngredients 
+                        key={index} 
+                        index={index} 
+                        quantity={val.quantity} 
+                        units={val.units} 
+                        ingredient={val.ingredient} 
+                        showButton={val.showButton} 
+                        addRow={this.addRow} 
+                        handleIngredientsChange={this.handleIngredientsChange}
+                      />;
              }, this)}
           </table>
           <br />
