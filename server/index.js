@@ -6,7 +6,7 @@ if (!process.env.CLIENT_ID) {
 
 var express = require('express');
 var bodyParser = require('body-parser');
-var items = require('../db');
+var items = require('../db/');
 var handler = require('./requestHandler.js');
 var facebook = require('./facebook.js');
 var passport = require('passport');

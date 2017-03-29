@@ -1,6 +1,8 @@
 import React from 'react';
 import AddRecipeIngredients from './addRecipeIngredients.jsx';
+import AddTag from './addTag.jsx';
 import $ from 'jquery';
+
 
 class AddRecipe extends React.Component {
   
@@ -9,12 +11,15 @@ class AddRecipe extends React.Component {
     this.state = {
       name: '',
       directions: '',
+      tags: [],
       ingredients: [{quantity: 1, units: 'spoonful', ingredient: 'sugar', showButton: true}]
     }
+    this.tagCreate = '';
     this.addRow = this.addRow.bind(this);
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.tagClick = this.tagClick.bind(this);
   }
 
   componentDidMount () {
@@ -69,6 +74,7 @@ class AddRecipe extends React.Component {
     const target = event.target;
     const name = target.name;
     const value = target.value;
+    console.log(`target:${target} name:${name} value:${value}`)
 
     let ing = this.state.ingredients;
     ing[index][name] = value;
@@ -88,6 +94,15 @@ class AddRecipe extends React.Component {
     });
   }
 
+  tagClick(value) {
+    let tagArr = this.state.tags;
+
+    tagArr.push(value);
+    this.setState({tags:tagArr});
+  }
+
+  
+
   render () {
     return (
       <div className="createRecipe">
@@ -101,7 +116,11 @@ class AddRecipe extends React.Component {
 
           <h3 className="recipeName">Recipe Name:</h3> 
           <input type="text" value={this.state.name} name="name" onChange={this.handleInputChange}/>
+      
           <br />
+
+          <AddTag onClick={this.tagClick} tagArr={this.state.tags} />
+       
           <br />
         
           <h3 className="title">Ingredients:</h3>
@@ -114,7 +133,16 @@ class AddRecipe extends React.Component {
               </tr>
             </thead>
             {this.state.ingredients.map(function(val, index) {
-               return <AddRecipeIngredients key={index} index={index} quantity={val.quantity} units={val.units} ingredient={val.ingredient} showButton={val.showButton} addRow={this.addRow} handleIngredientsChange={this.handleIngredientsChange}/>;
+               return <AddRecipeIngredients 
+                        key={index} 
+                        index={index} 
+                        quantity={val.quantity} 
+                        units={val.units} 
+                        ingredient={val.ingredient} 
+                        showButton={val.showButton} 
+                        addRow={this.addRow} 
+                        handleIngredientsChange={this.handleIngredientsChange}
+                      />;
              }, this)}
           </table>
           <br />

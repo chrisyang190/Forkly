@@ -3,8 +3,8 @@ mongoose.connect(process.env.MONGODB_URI);
 
 var db = mongoose.connection;
 
-db.on('error', function() {
-  console.log('mongoose connection error');
+db.on('error', function(err) {
+  console.log('mongoose connection error', err);
 });
 
 db.once('open', function() {
