@@ -17,6 +17,7 @@ var recipeSchema = mongoose.Schema({
   name: {type: String, unique: true, required: true},
   ingredients: Array,
   directions: String,
+  tags: Array,
   _creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 

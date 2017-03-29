@@ -43,6 +43,8 @@ class ViewFork extends React.Component {
       <div className="viewFork">
         <header>
           <h1 className="recipeName">{recipe.name}</h1>
+          <h1 className="recipeName">Tags:</h1>
+        {recipe.tags.map(( tag => <p>{tag}</p>))}
           <br />
         </header>
         <h3 className="title">Ingredients: </h3>
