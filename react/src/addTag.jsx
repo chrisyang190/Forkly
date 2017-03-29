@@ -15,13 +15,13 @@ class AddTags extends React.Component {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    console.log(value);
 
     this.setState({tag: value});
   }
 
   tagClick() {
     this.props.onClick(this.state.tag)
+    this.setState({tag:''});
   }
 
   render () {
@@ -32,7 +32,7 @@ class AddTags extends React.Component {
           <input type="button" name="addTag" value="Add Tag" onClick={this.tagClick}/>
         <br/>
         <ul>
-          {this.props.tagArr.map((tag, idx) => <Tag key={idx} index={idx} tag={tag} />)}
+          {this.props.tagArr.map((tag, idx) => <Tag key={idx} index={idx} tag={tag} onClick={this.props.removeTag}/>)}
         </ul>
       </div>
     )
