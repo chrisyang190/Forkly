@@ -49,7 +49,9 @@ exports.addRecipe = function(req, res) {
     req.body._creator = req.user._id;
     // create recipe in database
     let recipeId;
-    db.Recipe.create(req.body).then((recipe) => {
+    db.Recipe.create(req.body)
+      .then((recipe) => {
+      console.log('err')
       // push recipe into user's recipes array
       console.log('recipe>>>>>\n',recipe);
       recipeId = recipe.id;
@@ -57,7 +59,16 @@ exports.addRecipe = function(req, res) {
       .then(() => {
         res.json(recipeId);
       })
-    });
+      .catch((err)=>{
+        console.log('error in adding to db', err)
+      })
+    })
+    .catch((err)=>{
+      console.log('error in adding to db', err)
+      if(err.code === 11000) {
+        res.json(err.code);
+      }
+    })
   } else {
     res.end();
   }
@@ -96,8 +107,12 @@ exports.clearShoppingList = function(req, res) {
 }
 
 exports.getRecipeById = function(req, res) {
+  console.log('ID>>>>>>>>>>>>\n',req.body.id)
   db.Recipe.findById(req.body.id)
   .then((recipe) => {
     res.json(recipe);
+  })
+  .catch((err) => {
+    console.log('error in finding ID');
   })
 };

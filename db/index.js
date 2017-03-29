@@ -14,7 +14,7 @@ db.once('open', function() {
 
 var recipeSchema = mongoose.Schema({
   // dropDups will drop duplicates. will need to restart mongo router for these to kick in
-  name: {type: String, unique: true, dropDups: true, required: true},
+  name: {type: String, unique: true, required: true},
   ingredients: Array,
   directions: String,
   _creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}

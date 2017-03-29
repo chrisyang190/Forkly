@@ -58,7 +58,11 @@ class AddRecipe extends React.Component {
       method: 'POST',
       contentType: 'application/JSON',
       success: (recipeId) => {
-        router.history.push('/recipe/' + recipeId);
+        if(recipeId === 11000){
+          console.log("recipe already exists");
+        } else {
+          router.history.push('/recipe/' + recipeId);
+        }
       }
     });
     event.preventDefault();
