@@ -6,6 +6,7 @@ import AddRecipe from './addRecipe.jsx';
 import Login from './login.jsx';
 import ViewFork from './viewFork.js';
 import ViewRecipes from './viewRecipes.jsx';
+import ViewShoppingList from './viewShoppingList.jsx';
 import {
   BrowserRouter as Router,
   Route,
@@ -73,6 +74,10 @@ class App extends React.Component {
                   <img className="navButton" src="assets/images/logout.png" alt="Logout"/>
                   <span><Link to="/" onClick={this.logout}><br />Logout</Link></span>
                 </div>
+                 <div className="icon shoppingList">
+                  <img className="navButton" src="assets/images/addRecipe.png" alt="Add Recipe"/>
+                  <span><Link to="/shoppinglist">Shopping List</Link></span>
+                </div>
                 <div className="icon addRecipe">
                   <img className="navButton" src="assets/images/addRecipe.png" alt="Add Recipe"/>
                   <span><Link to="/addrecipe">Create Recipe</Link></span>
@@ -91,6 +96,7 @@ class App extends React.Component {
 
           <Route exact path="/" component={Home}/>
           <Route path="/addrecipe" component={AddRecipe}/>
+          <Route path="/shoppinglist" component={ViewShoppingList}/>
           <Route path="/myrecipes" component={ViewRecipes}/>
           <Route path="/recipe" component={ViewFork}/>
         
