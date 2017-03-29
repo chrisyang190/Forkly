@@ -1,6 +1,8 @@
 import React from 'react';
 import AddRecipeIngredients from './addRecipeIngredients.jsx';
+import AddTag from './addTag.jsx';
 import $ from 'jquery';
+
 
 class AddRecipe extends React.Component {
   
@@ -9,12 +11,15 @@ class AddRecipe extends React.Component {
     this.state = {
       name: '',
       directions: '',
+      tags: [],
       ingredients: [{quantity: 1, units: 'spoonful', ingredient: 'sugar', showButton: true}]
     }
+    this.tagCreate = '';
     this.addRow = this.addRow.bind(this);
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.tagClick = this.tagClick.bind(this);
   }
 
   componentDidMount () {
@@ -69,6 +74,7 @@ class AddRecipe extends React.Component {
     const target = event.target;
     const name = target.name;
     const value = target.value;
+    console.log(`target:${target} name:${name} value:${value}`)
 
     let ing = this.state.ingredients;
     ing[index][name] = value;
@@ -88,6 +94,15 @@ class AddRecipe extends React.Component {
     });
   }
 
+  tagClick(value) {
+    let tagArr = this.state.tags;
+
+    tagArr.push(value);
+    this.setState({tags:tagArr});
+  }
+
+  
+
   render () {
     return (
       <div className="createRecipe">
@@ -104,10 +119,8 @@ class AddRecipe extends React.Component {
       
           <br />
 
-          <h3 className="addTag">Tags:</h3>
-          <input type="text" name="tags"/>
-          <input type="button" name="addTag" value="Add Tag" />
-
+          <AddTag onClick={this.tagClick} tagArr={this.state.tags} />
+       
           <br />
         
           <h3 className="title">Ingredients:</h3>
