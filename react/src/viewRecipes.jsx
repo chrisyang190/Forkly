@@ -4,6 +4,7 @@ import $ from 'jquery';
 class ViewRecipes extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props in viewRecipes', props);
   }
 
   //before initial render, use ajax call to retrieve all recipes belonging to user
@@ -13,6 +14,7 @@ class ViewRecipes extends React.Component {
       url: '/getAllRecipes',
       type:'GET',
       success: function(data){
+        console.log('data from in getAllRecipes', data);
         boundThis.setState({recipes: data});
       },
       error: function(err) {
@@ -23,8 +25,24 @@ class ViewRecipes extends React.Component {
 
   handleClick(recipeId) {
     //redirect to /recipes/recipeId
+    // console.log('recipeID passed in', recipeId);
     const { router } = this.context
     router.history.push('/recipe/' + recipeId);
+  }
+
+  handleAdd(recipeId) {
+    // console.log('recipeID passed in', recipeId);
+    $.ajax({
+      url: '/addToShoppingList',
+      type: 'GET',
+      data: {'recipeId': recipeId},
+      success: function(data){
+        console.log('successfully added to shopping list');
+      },
+      error: function(err) {
+        console.log('did not successfully add to shopping list:', err);
+      }
+    })
   }
 
   render () {
@@ -34,13 +52,19 @@ class ViewRecipes extends React.Component {
     if (this.state) {
       this.state.recipes.forEach((recipe, index) => {
       recipesArray.push(
-        <li className="recipeSingle" 
+      <li>
+        <span className="recipeSingle" 
           key={index} 
           value={recipe} 
           onClick={() => this.handleClick(recipe._id)}>
           {recipe.name}
-        </li>)
+        </span>
+        <button onClick= {() => this.handleAdd(recipe._id)}>Add to Shopping List</button>
+        </li>
+        )
       });
+
+      console.log('recipesArray in viewRecipes:', recipesArray);
 
       template = 
       <div className="myRecipes">

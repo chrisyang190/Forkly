@@ -36,15 +36,14 @@ var selectAllRecipes = function(callback) {
 
 // User schema
 var userSchema = mongoose.Schema({
-  // username: {type: String, unique: true},
-  // hash: String,
-  // salt: String,
-  // username: String,
-  // _id: String,
   name: String,
   provider: String,
   facebook: Object,
   recipes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Recipe'
+  }],
+  shoppinglist: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Recipe'
   }]

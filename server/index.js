@@ -53,7 +53,7 @@ app.get('/auth/facebook/callback',
   // });
 );
 
-app.get('/logout', function(req, res){
+app.get('/logout', function(req, res) {
   req.logout();
   // req.session.destroy();
   res.redirect('/');
@@ -63,6 +63,11 @@ app.post('/searchRecipes', handler.searchRecipes);
 
 // to find all recipes for given user id
 app.get('/getAllRecipes', handler.getUserRecipes);
+
+//to load shopping list added by user
+app.get('/getShoppingList', handler.getShoppingList);
+
+app.get('/addToShoppingList', handler.addToShoppingList);
 
 app.post('/getRecipeById', handler.getRecipeById);
 

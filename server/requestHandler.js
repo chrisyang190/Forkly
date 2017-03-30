@@ -63,6 +63,31 @@ exports.addRecipe = function(req, res) {
   }
 };
 
+// for viewShoppingList Component - get all saved recipes for shopping
+exports.getShoppingList = function(req, res) {
+  if (req.user) {
+    db.User.findById(req.user._id)
+    .populate('shoppinglist')
+    .exec(function(err, user) {
+      res.send(user.shoppinglist);
+    });
+  } else {
+    res.end();
+  }
+}
+
+exports.addToShoppingList = function(req, res) {
+
+  if (req.user) {
+      db.User.findByIdAndUpdate(req.user._id, {$push: {shoppinglist: req.query.recipeId}})
+      .then(() => {
+        res.json(req.query.recipeId);
+      })
+  } else {
+    res.end();
+  }
+};
+
 exports.getRecipeById = function(req, res) {
   db.Recipe.findById(req.body.id)
   .then((recipe) => {

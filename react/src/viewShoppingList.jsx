@@ -1,24 +1,31 @@
 import React from 'react';
 import $ from 'jquery';
+import RecipeIngredients from './recipeIngredients'
 
 class ViewShoppingList extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props in viewShoppingList', props);
+    // this.state = {
+    //   recipes: []
+    // };
   }
 
   //before initial render, use ajax call to retrieve all recipes belonging to user
   componentDidMount() {
     var boundThis = this;
     $.ajax({
-      url: '/getAllRecipes',
+      url: '/getShoppingList',
       type:'GET',
       success: function(data){
+        console.log('data from viewShoppingList', data);
         boundThis.setState({recipes: data});
       },
       error: function(err) {
         console.log('could not retrieve any recipes for user');
       }
     });
+    // this.render();
   }
 
   handleClick(recipeId) {
@@ -32,15 +39,20 @@ class ViewShoppingList extends React.Component {
     var template = '';
 
     if (this.state) {
+      console.log('this.state.recipes:', this.state.recipes);
       this.state.recipes.forEach((recipe, index) => {
       recipesArray.push(
-        <li className="recipeSingle" 
+        <div className="recipeSingle" 
           key={index} 
           value={recipe} 
           onClick={() => this.handleClick(recipe._id)}>
           {recipe.name}
-        </li>)
+          <p>{recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+        </div>
+        )
       });
+
+      console.log('recipesArray in ShoppingList:', recipesArray);
 
       template = 
       <div className="myRecipes">
@@ -48,6 +60,7 @@ class ViewShoppingList extends React.Component {
         <h1 className="myRecipesTitle">My Shopping List</h1>
         <ul className="recipesArray">
           {recipesArray}
+
         </ul>
         <br />
         <br />
@@ -56,11 +69,11 @@ class ViewShoppingList extends React.Component {
       template = 
       <div >
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
-        <h1 className="myRecipesTitle">My Recipes</h1>
+        <h1 className="myRecipesTitle">My Shopping List</h1>
         <div className="loadingText"> 
           <h3>Loading...</h3>
           <br/>
-          <h3>Please login or create your first recipe!</h3>
+          <h3>You currently do not have anything in your shopping list!</h3>
           <br />
           <br />
         </div>
