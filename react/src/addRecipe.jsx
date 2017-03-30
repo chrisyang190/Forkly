@@ -1,6 +1,7 @@
 import React from 'react';
 import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
+import CurrentRecipeIngredients from './currentRecipeIngredients.jsx';
 import $ from 'jquery';
 
 
@@ -23,6 +24,7 @@ class AddRecipe extends React.Component {
     this.handlePrivateChange = this.handlePrivateChange.bind(this);
     this.tagClick = this.tagClick.bind(this);
     this.removeTag = this.removeTag.bind(this);
+    this.removeIngredients = this.removeIngredients.bind(this);
   }
 
   componentDidMount () {
@@ -129,7 +131,12 @@ class AddRecipe extends React.Component {
     this.setState({tags: tagArr});
   }
 
-  
+  removeIngredients(idx){
+    console.log('clicked')
+    let curIng = this.state.ingredients;
+    curIng.splice(idx,1);
+    this.setState({ingredients: curIng});
+  }
 
   render () {
     return (
@@ -160,7 +167,20 @@ class AddRecipe extends React.Component {
                 <td>Ingredient</td>
               </tr>
             </thead>
-            <AddRecipeIngredients addRow={this.addRow} />
+            <tbody>
+              {this.state.ingredients.map((obj, idx) => (
+                <CurrentRecipeIngredients 
+                  key={idx}
+                  index={idx}
+                  quantity={obj.quantity}
+                  units={obj.units}
+                  ingredient={obj.ingredient}
+                  onClick={this.removeIngredients}
+                  showButton={obj.showButton}
+                />
+              ))}
+              <AddRecipeIngredients addRow={this.addRow} />
+            </tbody>
           </table>
           <br />
         
