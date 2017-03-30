@@ -98,7 +98,7 @@ exports.addToShoppingList = function(req, res) {
 
   if (req.user) {
       db.User.findByIdAndUpdate(req.user._id, {$push: {shoppinglist: req.query.recipeId}})
-      .then(() => {
+      .exec(() => {
         res.json(req.query.recipeId);
       })
   } else {
@@ -109,8 +109,13 @@ exports.addToShoppingList = function(req, res) {
 exports.clearShoppingList = function(req, res) {
 
   if(req.user) {
-    // db.User.findByIdAndUpdate(req.user._id, )
-  }  
+    db.User.findByIdAndUpdate(req.user._id, {shoppinglist: []})
+    .exec((err, user) => {
+      res.send(user.shoppinglist);
+    })
+  } else {
+    res.end();
+  }
 }
 
 exports.getRecipeById = function(req, res) {

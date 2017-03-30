@@ -1,14 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
-import RecipeIngredients from './recipeIngredients'
+import ShoppingRecipeIngredient from './recipeIngredientsShopping.jsx'
 
 class ViewShoppingList extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in viewShoppingList', props);
-    // this.state = {
-    //   recipes: []
-    // };
   }
 
   //before initial render, use ajax call to retrieve all recipes belonging to user
@@ -34,12 +30,15 @@ class ViewShoppingList extends React.Component {
   }
 
   clearShoppingList() {
-
+    var context = this;
     $.ajax({
       url: '/clearShoppingList',
       type:'GET',
       success: function(data){
         console.log('successfully cleared shopping list', data);
+        context.setState({
+            recipes: []
+        });
       },
       error: function(err) {
         console.log('errored in clearing the shopping list');
@@ -63,7 +62,7 @@ class ViewShoppingList extends React.Component {
             onClick={() => this.handleClick(recipe._id)}>
             {recipe.name}
           </div>
-          <p>{recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+          <p>{recipe.ingredients.map((ingredient, index)=> <ShoppingRecipeIngredient ingredient={ingredient} key={index}/>)}</p>
         </div>
         )
       });
@@ -76,8 +75,8 @@ class ViewShoppingList extends React.Component {
         <h1 className="myRecipesTitle">My Shopping List</h1>
         <ul className="recipesArray">
           {recipesArray}
-
         </ul>
+        <button onClick = {() => this.clearShoppingList()}> Clear List </button>
         <br />
         <br />
       </div>
