@@ -170,6 +170,7 @@ class AddRecipe extends React.Component {
             <tbody>
               <AddRecipeIngredients addRow={this.addRow} />
               <tr>
+              <td>ADD INGREDIENTS</td>
               </tr>
               {this.state.ingredients.map((obj, idx) => (
                 <CurrentRecipeIngredients 
@@ -188,6 +189,19 @@ class AddRecipe extends React.Component {
         
           <h3 className="title"> Directions: </h3>
           <textarea name="directions" value={this.state.directions} onChange={this.handleInputChange}></textarea>
+          <table className="directions">
+            <thead>
+              <tr>
+                <td>Steps:</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Step1: Do Shit</td>
+              </tr>
+            </tbody>
+          </table>
+
           <br/>
           <label for="makePrivate">Make Private?</label>
           <input type="checkbox" name="makePrivate" onChange={this.handlePrivateChange}/>
