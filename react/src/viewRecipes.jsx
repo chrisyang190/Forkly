@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import RecipeSearch from './recipeSearch.jsx';
 
 class ViewRecipes extends React.Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class ViewRecipes extends React.Component {
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
         <h1 className="myRecipesTitle">My Recipes</h1>
         <ul className="recipesArray">
-          {recipesArray}
+          {this.state.recipes.map((recipe, index) => <RecipeSearch recipe={recipe} key={index}/>)}
         </ul>
         <br />
         <br />

@@ -30,6 +30,8 @@ class Home extends React.Component {
         console.log('ajax request to search recipes was successful!');
         console.log('response', data);
         context.setState({recipes: data});
+        console.log(`recipes ${context.state.recipes}`);
+        console.log('recipes state:', context.state.recipes);
         
       },
       error: function(err) {
