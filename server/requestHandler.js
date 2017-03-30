@@ -108,9 +108,21 @@ exports.clearShoppingList = function(req, res) {
 
 exports.getRecipeById = function(req, res) {
   console.log('ID>>>>>>>>>>>>\n',req.body.id)
+  var retrievedRecipe; 
   db.Recipe.findById(req.body.id)
   .then((recipe) => {
-    res.json(recipe);
+    retrievedRecipe = recipe;
+    console.log(retrievedRecipe._creator);
+    return recipe._creator;
+  })
+  .then((userId) => {
+    db.User.findById(userId)
+    .then((results)=>{
+      console.log(typeof retrievedRecipe);
+      retrievedRecipe.originator = results.name;
+      console.log(retrievedRecipe)
+      res.json(retrievedRecipe);
+    });
   })
   .catch((err) => {
     console.log('error in finding ID');

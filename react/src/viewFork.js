@@ -20,6 +20,7 @@ class ViewFork extends React.Component {
       data: JSON.stringify({id: recipeId}),
       contentType: 'application/json',
       success: function(data){
+        console.log(data);
         boundThis.setState({recipe: data});
       },
       error: function(err) {
