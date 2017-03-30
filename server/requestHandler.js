@@ -10,11 +10,13 @@ exports.searchRecipes = function(req, res) {
   var searchTerm = req.body.searchTerm;
   // regex -> allows the search to contain string instead of === string
   // options i -> allows search to be case insensitive
-  db.Recipe.find({name:{'$regex' : searchTerm, '$options' : 'i'}})
+  db.Recipe.find({'$or':[{name: {'$regex' : searchTerm, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchTerm, '$options': 'i'}}, {'tags': {'$regex': 'hot', $options: 'i'}}]})
     .exec(function (err, recipe) {
       if (err) {
         return err;
+        console.log('erred while getting');
       } else {
+        console.log('recipe from db: ', recipe);
       	res.json(recipe);
       }
 	});
