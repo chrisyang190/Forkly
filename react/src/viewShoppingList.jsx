@@ -1,20 +1,24 @@
 import React from 'react';
 import $ from 'jquery';
+import RecipeIngredients from './recipeIngredients'
 
-class ViewRecipes extends React.Component {
+class ViewShoppingList extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in viewRecipes', props);
+    console.log('props in viewShoppingList', props);
+    // this.state = {
+    //   recipes: []
+    // };
   }
 
   //before initial render, use ajax call to retrieve all recipes belonging to user
   componentDidMount() {
     var boundThis = this;
     $.ajax({
-      url: '/getAllRecipes',
+      url: '/getShoppingList',
       type:'GET',
       success: function(data){
-        console.log('data from in getAllRecipes', data);
+        console.log('data from viewShoppingList', data);
         boundThis.setState({recipes: data});
       },
       error: function(err) {
@@ -25,24 +29,23 @@ class ViewRecipes extends React.Component {
 
   handleClick(recipeId) {
     //redirect to /recipes/recipeId
-    // console.log('recipeID passed in', recipeId);
     const { router } = this.context
     router.history.push('/recipe/' + recipeId);
   }
 
-  handleAdd(recipeId) {
-    // console.log('recipeID passed in', recipeId);
+  clearShoppingList() {
+
     $.ajax({
-      url: '/addToShoppingList',
-      type: 'GET',
-      data: {'recipeId': recipeId},
+      url: '/clearShoppingList',
+      type:'GET',
       success: function(data){
-        console.log('successfully added to shopping list');
+        console.log('successfully cleared shopping list', data);
       },
       error: function(err) {
-        console.log('did not successfully add to shopping list:', err);
+        console.log('errored in clearing the shopping list');
       }
-    })
+    });
+
   }
 
   render () {
@@ -50,28 +53,30 @@ class ViewRecipes extends React.Component {
     var template = '';
 
     if (this.state) {
+      console.log('this.state.recipes:', this.state.recipes);
       this.state.recipes.forEach((recipe, index) => {
       recipesArray.push(
-      <li>
-        <span className="recipeSingle" 
-          key={index} 
-          value={recipe} 
-          onClick={() => this.handleClick(recipe._id)}>
-          {recipe.name}
-        </span>
-        <button onClick= {() => this.handleAdd(recipe._id)}>Add to Shopping List</button>
-        </li>
+        <div>
+          <div className="recipeSingle" 
+            key={index} 
+            value={recipe} 
+            onClick={() => this.handleClick(recipe._id)}>
+            {recipe.name}
+          </div>
+          <p>{recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+        </div>
         )
       });
 
-      console.log('recipesArray in viewRecipes:', recipesArray);
+      console.log('recipesArray in ShoppingList:', recipesArray);
 
       template = 
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
-        <h1 className="myRecipesTitle">My Recipes</h1>
+        <h1 className="myRecipesTitle">My Shopping List</h1>
         <ul className="recipesArray">
           {recipesArray}
+
         </ul>
         <br />
         <br />
@@ -80,11 +85,11 @@ class ViewRecipes extends React.Component {
       template = 
       <div >
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
-        <h1 className="myRecipesTitle">My Recipes</h1>
+        <h1 className="myRecipesTitle">My Shopping List</h1>
         <div className="loadingText"> 
           <h3>Loading...</h3>
           <br/>
-          <h3>Please login or create your first recipe!</h3>
+          <h3>You currently do not have anything in your shopping list!</h3>
           <br />
           <br />
         </div>
@@ -96,8 +101,8 @@ class ViewRecipes extends React.Component {
   }
 }
 
-ViewRecipes.contextTypes = {
+ViewShoppingList.contextTypes = {
   router: React.PropTypes.object
 }
 
-export default ViewRecipes;
+export default ViewShoppingList;

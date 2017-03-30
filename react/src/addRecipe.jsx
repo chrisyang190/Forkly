@@ -28,7 +28,7 @@ class AddRecipe extends React.Component {
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);
     let boundThis = this;
     // if history has url at end
-    if (forkedId.length > 0) {
+    if (forkedId !== 'addrecipe') {
       console.log('hi');
       $.ajax({
         url: '/getRecipeById',

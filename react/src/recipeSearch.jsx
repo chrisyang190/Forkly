@@ -4,6 +4,7 @@ import RecipeIngredients from './recipeIngredients'
 class RecipeSearch extends React.Component {
   constructor(props) {
   	super(props);
+    console.log('props in Recipe search', props);
   }
 
   setSearchTerm(searchTerm) {
