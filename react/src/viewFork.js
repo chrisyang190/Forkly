@@ -20,6 +20,7 @@ class ViewFork extends React.Component {
       data: JSON.stringify({id: recipeId}),
       contentType: 'application/json',
       success: function(data){
+        console.log(data);
         boundThis.setState({recipe: data});
       },
       error: function(err) {
@@ -43,6 +44,8 @@ class ViewFork extends React.Component {
       <div className="viewFork">
         <header>
           <h1 className="recipeName">{recipe.name}</h1>
+          <h1 className="recipeName">Tags:</h1>
+        {recipe.tags.map(( tag => <p>{tag}</p>))}
           <br />
         </header>
         <h3 className="title">Ingredients: </h3>

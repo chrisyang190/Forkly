@@ -20,6 +20,7 @@ class AddRecipe extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.tagClick = this.tagClick.bind(this);
+    this.removeTag = this.removeTag.bind(this);
   }
 
   componentDidMount () {
@@ -57,7 +58,11 @@ class AddRecipe extends React.Component {
       method: 'POST',
       contentType: 'application/JSON',
       success: (recipeId) => {
-        router.history.push('/recipe/' + recipeId);
+        if(recipeId === 11000){
+          console.log("recipe already exists");
+        } else {
+          router.history.push('/recipe/' + recipeId);
+        }
       }
     });
     event.preventDefault();
@@ -101,6 +106,13 @@ class AddRecipe extends React.Component {
     this.setState({tags:tagArr});
   }
 
+  removeTag(index){
+    let tagArr = this.state.tags;
+
+    tagArr.splice(index, 1);
+    this.setState({tags: tagArr});
+  }
+
   
 
   render () {
@@ -119,7 +131,7 @@ class AddRecipe extends React.Component {
       
           <br />
 
-          <AddTag onClick={this.tagClick} tagArr={this.state.tags} />
+          <AddTag onClick={this.tagClick} tagArr={this.state.tags} removeTag={this.removeTag}/>
        
           <br />
         
