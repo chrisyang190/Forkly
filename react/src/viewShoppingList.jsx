@@ -52,7 +52,6 @@ class ViewShoppingList extends React.Component {
     var template = '';
 
     if (this.state) {
-      console.log('this.state.recipes:', this.state.recipes);
       this.state.recipes.forEach((recipe, index) => {
       recipesArray.push(
         <div>

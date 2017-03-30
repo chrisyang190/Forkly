@@ -74,8 +74,8 @@ class App extends React.Component {
                   <img className="navButton" src="assets/images/logout.png" alt="Logout"/>
                   <span><Link to="/" onClick={this.logout}><br />Logout</Link></span>
                 </div>
-                 <div className="icon shoppingList">
-                  <img className="navButton" src="assets/images/shoppingcart.png" alt="Add Recipe"/>
+                <div className="icon shoppingList">
+                  <img className="navButton" src="assets/images/shoppingcart.png" alt="Add to Shopping List"/>
                   <span><Link to="/shoppinglist">Shopping List</Link></span>
                 </div>
                 <div className="icon addRecipe">

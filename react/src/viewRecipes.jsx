@@ -64,8 +64,6 @@ class ViewRecipes extends React.Component {
         )
       });
 
-      console.log('recipesArray in viewRecipes:', recipesArray);
-
       template = 
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
