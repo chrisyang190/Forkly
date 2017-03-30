@@ -25,13 +25,27 @@ class ViewShoppingList extends React.Component {
         console.log('could not retrieve any recipes for user');
       }
     });
-    // this.render();
   }
 
   handleClick(recipeId) {
     //redirect to /recipes/recipeId
     const { router } = this.context
     router.history.push('/recipe/' + recipeId);
+  }
+
+  clearShoppingList() {
+
+    $.ajax({
+      url: '/clearShoppingList',
+      type:'GET',
+      success: function(data){
+        console.log('successfully cleared shopping list', data);
+      },
+      error: function(err) {
+        console.log('errored in clearing the shopping list');
+      }
+    });
+
   }
 
   render () {
@@ -42,11 +56,13 @@ class ViewShoppingList extends React.Component {
       console.log('this.state.recipes:', this.state.recipes);
       this.state.recipes.forEach((recipe, index) => {
       recipesArray.push(
-        <div className="recipeSingle" 
-          key={index} 
-          value={recipe} 
-          onClick={() => this.handleClick(recipe._id)}>
-          {recipe.name}
+        <div>
+          <div className="recipeSingle" 
+            key={index} 
+            value={recipe} 
+            onClick={() => this.handleClick(recipe._id)}>
+            {recipe.name}
+          </div>
           <p>{recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
         </div>
         )

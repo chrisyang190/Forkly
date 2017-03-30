@@ -88,6 +88,13 @@ exports.addToShoppingList = function(req, res) {
   }
 };
 
+exports.clearShoppingList = function(req, res) {
+
+  if(req.user) {
+    // db.User.findByIdAndUpdate(req.user._id, )
+  }  
+}
+
 exports.getRecipeById = function(req, res) {
   db.Recipe.findById(req.body.id)
   .then((recipe) => {
