@@ -4,22 +4,24 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 var db = require("../db/index.js");
+var dbSearch = require('../db/dbSearch.js');
 
 // for Home Component - from searchRecipes function
 exports.searchRecipes = function(req, res) {
   var searchTerm = req.body.searchTerm;
   // regex -> allows the search to contain string instead of === string
   // options i -> allows search to be case insensitive
-  db.Recipe.find({'$or':[{name: {'$regex' : searchTerm, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchTerm, '$options': 'i'}}, {'tags': {'$regex': 'hot', $options: 'i'}}]})
-    .exec(function (err, recipe) {
-      if (err) {
-        return err;
-        console.log('erred while getting');
-      } else {
-        console.log('recipe from db: ', recipe);
-      	res.json(recipe);
-      }
-	});
+
+
+  dbSearch.vaguePhraseRecipeSearch(searchTerm).then((recipes) => {
+    console.log('this is callback in handler: recipes: ', recipes);
+
+    res.json(recipes);
+  })
+  .catch((err) => {
+    console.log('errored out in handler');
+    res.status(500).send();
+  })
 };
 
 // for Nav Component - from getUsername function
