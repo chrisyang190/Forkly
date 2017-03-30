@@ -195,9 +195,12 @@ exports.getRecipeById = function(req, res) {
     .then((results)=>{
       console.log(typeof retrievedRecipe);
       retrievedRecipe.originator = results.name;
-      console.log(retrievedRecipe)
-      res.json(retrievedRecipe);
-    });
+      console.log(retrievedRecipe.originator)
+      return retrievedRecipe;
+    })
+    .then((data) => {
+      res.send(retrievedRecipe);
+    })
   })
   .catch((err) => {
     console.log('error in finding ID');
