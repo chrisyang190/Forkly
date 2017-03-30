@@ -11,8 +11,6 @@ exports.searchRecipes = function(req, res) {
   var searchTerm = req.body.searchTerm;
   // regex -> allows the search to contain string instead of === string
   // options i -> allows search to be case insensitive
-
-
   dbSearch.vaguePhraseRecipeSearch(searchTerm).then((recipes) => {
     console.log('this is callback in handler: recipes: ', recipes);
     let jsonRecipes = [];
