@@ -13,7 +13,7 @@ class AddRecipe extends React.Component {
       directions: '',
       tags: [],
       isPrivate: false, 
-      ingredients: [{quantity: 1, units: 'spoonful', ingredient: 'sugar', showButton: true}]
+      ingredients: []
     }
     this.tagCreate = '';
     this.addRow = this.addRow.bind(this);
@@ -70,11 +70,19 @@ class AddRecipe extends React.Component {
     event.preventDefault();
   }
 
-  addRow() {
-    let myIngredients = this.state.ingredients;
-    myIngredients[myIngredients.length - 1].showButton = false;
-    myIngredients.push({quantity: 0, units: '', ingredient: '', showButton: true});
-    this.setState({ingredients: myIngredients});
+  addRow(ingObj) {
+    // let myIngredients = this.state.ingredients;
+    // myIngredients[myIngredients.length - 1].showButton = false;
+    // myIngredients.push({quantity: 0, units: '', ingredient: '', showButton: true});
+    // this.setState({ingredients: myIngredients});
+    let myIngredients = ingObj;
+    let myIngArr = this.state.ingredients
+
+    myIngredients.showButton = false;
+    myIngArr.push(ingObj);
+
+    this.setState({ingredients: myIngArr});
+    console.log(this.state.ingredients)
   }
 
   handleIngredientsChange (event, index) {
@@ -152,18 +160,7 @@ class AddRecipe extends React.Component {
                 <td>Ingredient</td>
               </tr>
             </thead>
-            {this.state.ingredients.map(function(val, index) {
-               return <AddRecipeIngredients 
-                        key={index} 
-                        index={index} 
-                        quantity={val.quantity} 
-                        units={val.units} 
-                        ingredient={val.ingredient} 
-                        showButton={val.showButton} 
-                        addRow={this.addRow} 
-                        handleIngredientsChange={this.handleIngredientsChange}
-                      />;
-             }, this)}
+            <AddRecipeIngredients addRow={this.addRow} />
           </table>
           <br />
         
@@ -171,7 +168,7 @@ class AddRecipe extends React.Component {
           <textarea name="directions" value={this.state.directions} onChange={this.handleInputChange}></textarea>
           <br/>
           <label for="makePrivate">Make Private?</label>
-          <input type="checkbox" id="makePrivate" onChange={this.handlePrivateChange}/>
+          <input type="checkbox" name="makePrivate" onChange={this.handlePrivateChange}/>
 
           <br />
 
