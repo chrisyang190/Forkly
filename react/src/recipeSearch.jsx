@@ -26,8 +26,8 @@ class RecipeSearch extends React.Component {
       data: JSON.stringify(searchTerm),
       contentType: 'application/json',
       success: function(data){
-        console.log('ajax request was SUCCESSFUL!');
-        // console.log('response', data);
+        console.log('ajax request was successful!');
+        console.log('response', data);
         context.setState({recipes: data});
         
       },
