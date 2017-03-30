@@ -75,8 +75,6 @@ app.get('/changeCheckbox', handler.changeCheckbox);
 
 app.get('/getRecipeById', handler.getRecipeById);
 
-app.get('/getCreator', handler.getCreator);
-
 app.listen(port, function() {
   console.log('listening on port '+ port + '!');
 });

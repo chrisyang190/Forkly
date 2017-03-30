@@ -42,6 +42,7 @@ exports.getUserRecipes = function(req, res) {
     db.User.findById(req.user._id)
     .populate('recipes')
     .exec(function(err, user) {
+      console.log(user)
       res.send(user.recipes);
     });
   } else {
@@ -181,22 +182,12 @@ if(req.user){
   }
 }
 
-exports.getCreator = (req, res) => {
-  console.log(req.query);
-  db.User.findById(req.query.user)
-  .then(result => {
-    res.send(result.name)
-  })
-  .catch(err => {
-    console.log('error in finding creator')
-  })
-};
-
 exports.getRecipeById = function(req, res) {
   console.log('ID>>>>>>>>>>>>\n',req.query)
   db.Recipe.findById(req.query.id)
-  .then((recipe) => {
-    res.send(recipe);
+  .populate('_creator')
+  .exec((err, results)=>{
+    res.send(results);
   })
   .catch((err) => {
     console.log('error in finding ID');
