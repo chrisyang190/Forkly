@@ -10,6 +10,7 @@ class AddRecipeIngredients extends React.Component {
       showButton: true
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   handleChange(event) {
@@ -21,13 +22,23 @@ class AddRecipeIngredients extends React.Component {
     });
   }
 
+  onClick() {
+    this.props.addRow(this.state);
+    this.setState({
+      quantity: 0,
+      units: '', 
+      ingredient: '',
+      showButton: true
+    });
+  }
+
   render() {
     return (
       <tr>
         <td><input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} /></td>
         <td><input type="text" name="units" value={this.state.units} onChange={this.handleChange} /></td>
         <td><input type="text" name="ingredient" value={this.state.ingredient} onChange={this.handleChange}/></td>
-        <td><input type="button" name="addRecipeNewRow" value="Add Row" onClick={()=>{this.props.addRow(this.state)}} /></td>
+        <td><input type="button" name="addRecipeNewRow" value="Add Row" onClick={this.onClick} /></td>
       </tr>
     )
   }

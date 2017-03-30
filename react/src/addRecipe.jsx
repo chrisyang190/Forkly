@@ -168,6 +168,9 @@ class AddRecipe extends React.Component {
               </tr>
             </thead>
             <tbody>
+              <AddRecipeIngredients addRow={this.addRow} />
+              <tr>
+              </tr>
               {this.state.ingredients.map((obj, idx) => (
                 <CurrentRecipeIngredients 
                   key={idx}
@@ -179,7 +182,6 @@ class AddRecipe extends React.Component {
                   showButton={obj.showButton}
                 />
               ))}
-              <AddRecipeIngredients addRow={this.addRow} />
             </tbody>
           </table>
           <br />
