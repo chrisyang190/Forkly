@@ -5,8 +5,8 @@ mongoose.Promise = require('bluebird');
 var vagueWordRecipeSearch = function (searchWord) {
 
 	return new Promise((resolve, reject) => {
-    // db.Recipe.find({'$and': [{'$or':[{name: {'$regex': searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]}, {'isPrivate': false}]})
-    db.Recipe.find({'$or':[{name: {'$regex' : searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]})
+    db.Recipe.find({'$and': [{'$or':[{name: {'$regex': searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]}, {'isPrivate': false}]})
+    // db.Recipe.find({'$or':[{name: {'$regex' : searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]})
     // .where('isPrivate').equals(false)
     .exec(function (err, recipes) {
       if (err) {
@@ -88,4 +88,4 @@ var exactWordRecipeSearch = function (searchWord) {
   });
 }
 
-module.exports.exactWordRecipeSearch = vagueWordRecipeSearch;
+// module.exports.exactWordRecipeSearch = vagueWordRecipeSearch;
