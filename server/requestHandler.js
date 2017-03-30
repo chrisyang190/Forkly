@@ -181,26 +181,22 @@ if(req.user){
   }
 }
 
-exports.getRecipeById = function(req, res) {
-  console.log('ID>>>>>>>>>>>>\n',req.body.id)
-  var retrievedRecipe; 
-  db.Recipe.findById(req.body.id)
-  .then((recipe) => {
-    retrievedRecipe = recipe;
-    console.log(retrievedRecipe._creator);
-    return recipe._creator;
+exports.getCreator = (req, res) => {
+  console.log(req.query);
+  db.User.findById(req.query.user)
+  .then(result => {
+    res.send(result.name)
   })
-  .then((userId) => {
-    db.User.findById(userId)
-    .then((results)=>{
-      console.log(typeof retrievedRecipe);
-      retrievedRecipe.originator = results.name;
-      console.log(retrievedRecipe.originator)
-      return retrievedRecipe;
-    })
-    .then((data) => {
-      res.send(retrievedRecipe);
-    })
+  .catch(err => {
+    console.log('error in finding creator')
+  })
+};
+
+exports.getRecipeById = function(req, res) {
+  console.log('ID>>>>>>>>>>>>\n',req.query)
+  db.Recipe.findById(req.query.id)
+  .then((recipe) => {
+    res.send(recipe);
   })
   .catch((err) => {
     console.log('error in finding ID');

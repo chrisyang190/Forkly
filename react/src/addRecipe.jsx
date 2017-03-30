@@ -12,6 +12,7 @@ class AddRecipe extends React.Component {
       name: '',
       directions: '',
       tags: [],
+      isPrivate: false, 
       ingredients: [{quantity: 1, units: 'spoonful', ingredient: 'sugar', showButton: true}]
     }
     this.tagCreate = '';
@@ -19,6 +20,7 @@ class AddRecipe extends React.Component {
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePrivateChange = this.handlePrivateChange.bind(this);
     this.tagClick = this.tagClick.bind(this);
     this.removeTag = this.removeTag.bind(this);
   }
@@ -87,6 +89,12 @@ class AddRecipe extends React.Component {
     this.setState({
       ingredients: ing
     });
+  }
+
+  handlePrivateChange () {
+        console.log(this.state.isPrivate);
+    this.setState({isPrivate: !this.state.isPrivate});
+    console.log(this.state.isPrivate);
   }
 
   handleInputChange (event) {
@@ -161,6 +169,9 @@ class AddRecipe extends React.Component {
         
           <h3 className="title"> Directions: </h3>
           <textarea name="directions" value={this.state.directions} onChange={this.handleInputChange}></textarea>
+          <br/>
+          <label for="makePrivate">Make Private?</label>
+          <input type="checkbox" id="makePrivate" onChange={this.handlePrivateChange}/>
 
           <br />
 
