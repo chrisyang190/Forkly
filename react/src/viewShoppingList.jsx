@@ -1,25 +1,46 @@
 import React from 'react';
 import $ from 'jquery';
-import RecipeIngredients from './recipeIngredients'
+import ShoppingRecipeIngredient from './recipeIngredientsShopping.jsx';
+import RecipeList from './recipeList.jsx';
 
 class ViewShoppingList extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in viewShoppingList', props);
-    // this.state = {
-    //   recipes: []
-    // };
   }
 
   //before initial render, use ajax call to retrieve all recipes belonging to user
   componentDidMount() {
+    console.log('component did mount');
     var boundThis = this;
     $.ajax({
       url: '/getShoppingList',
       type:'GET',
       success: function(data){
         console.log('data from viewShoppingList', data);
-        boundThis.setState({recipes: data});
+
+        var ingredientsArray = [];
+
+        for (var key in data.shoppingingredients) {
+          var object = {
+            ingredient: null,
+            quantity: null,
+            units: null,
+            checked: null
+          }
+          object['ingredient'] = key;
+          object['quantity'] = data.shoppingingredients[key]['quantity'];
+          object['units'] = data.shoppingingredients[key]['units'];
+          object['checked'] = data.shoppingingredients[key]['checked'];
+
+          ingredientsArray.push(object);
+        }
+
+        boundThis.setState({
+          recipes: data.shoppinglist,
+          ingredients: ingredientsArray
+        });
+        // console.log('this.state.recipes', this.state.recipes);
+        // console.log('this.state.ingredients', this.state.ingredients);
       },
       error: function(err) {
         console.log('could not retrieve any recipes for user');
@@ -34,12 +55,15 @@ class ViewShoppingList extends React.Component {
   }
 
   clearShoppingList() {
-
+    var context = this;
     $.ajax({
       url: '/clearShoppingList',
       type:'GET',
       success: function(data){
         console.log('successfully cleared shopping list', data);
+        context.setState({
+            recipes: []
+        });
       },
       error: function(err) {
         console.log('errored in clearing the shopping list');
@@ -51,36 +75,43 @@ class ViewShoppingList extends React.Component {
   render () {
     var recipesArray = [];
     var template = '';
+    var ingredientsArray = [];
 
     if (this.state) {
-      console.log('this.state.recipes:', this.state.recipes);
-      this.state.recipes.forEach((recipe, index) => {
-      recipesArray.push(
-        <div>
-          <div className="recipeSingle" 
-            key={index} 
-            value={recipe} 
-            onClick={() => this.handleClick(recipe._id)}>
-            {recipe.name}
-          </div>
-          <p>{recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
-        </div>
-        )
-      });
 
-      console.log('recipesArray in ShoppingList:', recipesArray);
+      // for (var key in this.state.ingredients) {
+      //   var object = {
+      //     ingredient: null,
+      //     quantity: null,
+      //     units: null,
+      //     checked: null
+      //   }
+      //   object['ingredient'] = key;
+      //   object['quantity'] = this.state.ingredients[key]['quantity'];
+      //   object['units'] = this.state.ingredients[key]['units'];
+      //   object['checked'] = this.state.ingredients[key]['checked'];
+
+      //   ingredientsArray.push(object);
+
+      // }
 
       template = 
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
         <h1 className="myRecipesTitle">My Shopping List</h1>
-        <ul className="recipesArray">
-          {recipesArray}
-
-        </ul>
+        <h4 className="recipesArray"> Shopping List </h4>
+          <ul className="recipesArray">
+            {this.state.ingredients.map((ingredient, index) => (<ShoppingRecipeIngredient ingredient={ingredient} key={index}/>))}
+          </ul>
+        <h4 className="recipesArray"> Recipes </h4>
+          <ul className="recipesArray">
+            {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index}/>)}
+          </ul>
+          <button onClick = {() => this.clearShoppingList()}> Clear List </button>
         <br />
         <br />
       </div>
+
     } else {
       template = 
       <div >

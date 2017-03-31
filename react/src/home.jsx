@@ -1,6 +1,5 @@
 import React from 'react';
 import $ from 'jquery';
-
 import RecipeSearch from './recipeSearch.jsx';
 
 class Home extends React.Component {

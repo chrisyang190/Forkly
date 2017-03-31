@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import RecipeSearch from './recipeSearch.jsx';
 
 class ViewRecipes extends React.Component {
   constructor(props) {
@@ -50,28 +51,26 @@ class ViewRecipes extends React.Component {
     var template = '';
 
     if (this.state) {
-      this.state.recipes.forEach((recipe, index) => {
-      recipesArray.push(
-      <li>
-        <span className="recipeSingle" 
-          key={index} 
-          value={recipe} 
-          onClick={() => this.handleClick(recipe._id)}>
-          {recipe.name}
-        </span>
-        <button onClick= {() => this.handleAdd(recipe._id)}>Add to Shopping List</button>
-        </li>
-        )
-      });
-
-      console.log('recipesArray in viewRecipes:', recipesArray);
+      // this.state.recipes.forEach((recipe, index) => {
+      // recipesArray.push(
+      // <li>
+      //   <span className="recipeSingle" 
+      //     key={index} 
+      //     value={recipe} 
+      //     onClick={() => this.handleClick(recipe._id)}>
+      //     {recipe.name}
+      //   </span>
+      //   <button onClick= {() => this.handleAdd(recipe._id)}>Add to Shopping List</button>
+      //   </li>
+      //   )
+      // });
 
       template = 
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
         <h1 className="myRecipesTitle">My Recipes</h1>
         <ul className="recipesArray">
-          {recipesArray}
+          {this.state.recipes.map((recipe, index) => <RecipeSearch recipe={recipe} key={index}/>)}
         </ul>
         <br />
         <br />
