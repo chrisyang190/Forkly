@@ -1,7 +1,6 @@
 import React from 'react';
 import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
-import CurrentRecipeIngredients from './currentRecipeIngredients.jsx';
 import AddStep from './addStep.jsx';
 import CurrentStep from './currentSteps.jsx';
 import $ from 'jquery';
@@ -76,11 +75,7 @@ class AddRecipe extends React.Component {
     event.preventDefault();
   }
 
-  addRow(ingObj) {
-    // let myIngredients = this.state.ingredients;
-    // myIngredients[myIngredients.length - 1].showButton = false;
-    // myIngredients.push({quantity: 0, units: '', ingredient: '', showButton: true});
-    // this.setState({ingredients: myIngredients});
+  addRow(ingObj){
     let myIngredients = ingObj;
     let myIngArr = this.state.ingredients
 
@@ -130,24 +125,21 @@ class AddRecipe extends React.Component {
 
   removeTag(index){
     let tagArr = this.state.tags;
-
     tagArr.splice(index, 1);
     this.setState({tags: tagArr});
   }
 
-  removeIngredients(idx){
+  removeIngredients(index){
     let curIng = this.state.ingredients;
-    console.log(curIng[idx])
-
-    curIng.splice(idx,1);
-    console.log(curIng);
+    curIng.splice(index,1);
     this.setState({ingredients: curIng});
     console.log(this.state.ingredients)
   }
 
-  removeStep(idx) {
+  removeStep(index) {
+    console.log(index);
     let curDir = this.state.directions;
-    curDir.splice(idx,1);
+    curDir.splice(index,1);
     this.setState({directions: curDir});
   }
 
@@ -188,23 +180,7 @@ class AddRecipe extends React.Component {
                 <td>Ingredient</td>
               </tr>
             </thead>
-            <tbody>
-              <AddRecipeIngredients addRow={this.addRow} />
-              <tr>
-              <td>ADD INGREDIENTS</td>
-              </tr>
-              {this.state.ingredients.map((obj, idx) => (
-                <CurrentRecipeIngredients 
-                  key={idx}
-                  index={idx}
-                  quantity={obj.quantity}
-                  units={obj.units}
-                  ingredient={obj.ingredient}
-                  onClick={this.removeIngredients}
-                  showButton={obj.showButton}
-                />
-              ))}
-            </tbody>
+            <AddRecipeIngredients addRow={this.addRow} ingArr={this.state.ingredients} removeIng={this.removeIngredients} />
           </table>
           <br />
         

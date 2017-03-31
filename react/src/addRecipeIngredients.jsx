@@ -1,4 +1,6 @@
 import React from 'react';
+import CurrentRecipeIngredients from './currentRecipeIngredients.jsx';
+
 
 class AddRecipeIngredients extends React.Component {
   constructor(props) {
@@ -34,12 +36,28 @@ class AddRecipeIngredients extends React.Component {
 
   render() {
     return (
-      <tr>
-        <td><input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} /></td>
-        <td><input type="text" name="units" value={this.state.units} onChange={this.handleChange} /></td>
-        <td><input type="text" name="ingredient" value={this.state.ingredient} onChange={this.handleChange}/></td>
-        <td><input type="button" name="addRecipeNewRow" value="Add Row" onClick={this.onClick} /></td>
-      </tr>
+      <tbody>
+        <tr>
+          <td><input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} /></td>
+          <td><input type="text" name="units" value={this.state.units} onChange={this.handleChange} /></td>
+          <td><input type="text" name="ingredient" value={this.state.ingredient} onChange={this.handleChange}/></td>
+          <td><input type="button" name="addRecipeNewRow" value="Add Row" onClick={this.onClick} /></td>
+        </tr>
+        <tr>
+          <td>ADD INGREDIENT</td>
+        </tr>
+        {this.props.ingArr.map((obj, idx) => 
+          <CurrentRecipeIngredients 
+            key={idx}
+            index={idx}
+            quantity={obj.quantity}
+            units={obj.units}
+            ingredient={obj.ingredient}
+            onClick={this.props.removeIng}
+            showButton={obj.showButton}
+          />
+        )}
+      </tbody>
     )
   }
 };
