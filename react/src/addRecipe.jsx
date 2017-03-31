@@ -130,6 +130,7 @@ class AddRecipe extends React.Component {
   }
 
   removeIngredients(index){
+    console.log(index)
     let curIng = this.state.ingredients;
     curIng.splice(index,1);
     this.setState({ingredients: curIng});
