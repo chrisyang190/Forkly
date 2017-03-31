@@ -43,7 +43,7 @@ class RecipeSearch extends React.Component {
     router.history.push('/recipe/' + recipeId);
   }
 
-   handleAdd(recipeId) {
+   handleAdd(recipe) {
     // console.log('recipeID passed in', recipeId);
     this.setState({
       added: true
@@ -52,7 +52,7 @@ class RecipeSearch extends React.Component {
     $.ajax({
       url: '/addToShoppingList',
       type: 'GET',
-      data: {'recipeId': recipeId},
+      data: {'recipe': recipe},
       success: function(data){
         console.log('successfully added to shopping list');
       },
@@ -75,7 +75,7 @@ class RecipeSearch extends React.Component {
   	  <span className='results'>
         <div className='searchName'>
           <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
-          <button onClick= {() => this.handleAdd(this.props.recipe._id)}>Add to Shopping List</button>
+          <button onClick= {() => this.handleAdd(this.props.recipe)}>Add to Shopping List</button>
         </div>
           {message}
         <div className='ingredients'>

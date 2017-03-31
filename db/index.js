@@ -47,7 +47,21 @@ var userSchema = mongoose.Schema({
   shoppinglist: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Recipe'
-  }]
+  }],
+  // shoppingingredients: {
+  //   ingredient: {
+  //     // quantity: {type: Number},
+  //     // unit: {type: String},
+  //     // checked: {type: Boolean}
+  //     quantity: Number,
+  //     unit: String,
+  //     checked: Boolean
+  //   }
+  // }
+  // shoppingingredients: [String]
+  // shoppingingredients: [Object]
+  // shoppingingredients: mongoose.Schema.Types.Mixed
+  shoppingingredients: Object
 });
 
 var User = mongoose.model('User', userSchema);

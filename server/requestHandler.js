@@ -96,8 +96,9 @@ exports.getShoppingList = function(req, res) {
 
 exports.addToShoppingList = function(req, res) {
 
+  console.log('req.query recipe from add to shopping list', req.query.recipe);
   if (req.user) {
-      db.User.findByIdAndUpdate(req.user._id, {$push: {shoppinglist: req.query.recipeId}})
+      db.User.findByIdAndUpdate(req.user._id, {$push: {shoppinglist: req.query.recipe._id}})
       .exec(() => {
         res.json(req.query.recipeId);
       })

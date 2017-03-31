@@ -5,6 +5,9 @@ import ShoppingRecipeIngredient from './recipeIngredientsShopping.jsx'
 class ViewShoppingList extends React.Component {
   constructor(props) {
     super(props);
+    // this.state = {
+    //   listItems: []
+    // }
   }
 
   //before initial render, use ajax call to retrieve all recipes belonging to user
