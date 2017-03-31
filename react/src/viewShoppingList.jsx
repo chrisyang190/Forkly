@@ -17,9 +17,27 @@ class ViewShoppingList extends React.Component {
       type:'GET',
       success: function(data){
         console.log('data from viewShoppingList', data);
+
+        var ingredientsArray = [];
+
+        for (var key in data.shoppingingredients) {
+          var object = {
+            ingredient: null,
+            quantity: null,
+            units: null,
+            checked: null
+          }
+          object['ingredient'] = key;
+          object['quantity'] = data.shoppingingredients[key]['quantity'];
+          object['units'] = data.shoppingingredients[key]['units'];
+          object['checked'] = data.shoppingingredients[key]['checked'];
+
+          ingredientsArray.push(object);
+        }
+
         boundThis.setState({
           recipes: data.shoppinglist,
-          ingredients: data.shoppingingredients
+          ingredients: ingredientsArray
         });
         // console.log('this.state.recipes', this.state.recipes);
         // console.log('this.state.ingredients', this.state.ingredients);
@@ -61,21 +79,21 @@ class ViewShoppingList extends React.Component {
 
     if (this.state) {
 
-      for (var key in this.state.ingredients){
-        var object = {
-          ingredient: null,
-          quantity: null,
-          units: null,
-          checked: null
-        }
-        object['ingredient'] = key;
-        object['quantity'] = this.state.ingredients[key]['quantity'];
-        object['units'] = this.state.ingredients[key]['units'];
-        object['checked'] = this.state.ingredients[key]['checked'];
+      // for (var key in this.state.ingredients) {
+      //   var object = {
+      //     ingredient: null,
+      //     quantity: null,
+      //     units: null,
+      //     checked: null
+      //   }
+      //   object['ingredient'] = key;
+      //   object['quantity'] = this.state.ingredients[key]['quantity'];
+      //   object['units'] = this.state.ingredients[key]['units'];
+      //   object['checked'] = this.state.ingredients[key]['checked'];
 
-        ingredientsArray.push(object);
+      //   ingredientsArray.push(object);
 
-      }
+      // }
 
       template = 
       <div className="myRecipes">
@@ -83,7 +101,7 @@ class ViewShoppingList extends React.Component {
         <h1 className="myRecipesTitle">My Shopping List</h1>
         <h4 className="recipesArray"> Shopping List </h4>
           <ul className="recipesArray">
-            {ingredientsArray.map((ingredient, index) => <ShoppingRecipeIngredient ingredient={ingredient} key={index}/>)}
+            {this.state.ingredients.map((ingredient, index) => (<ShoppingRecipeIngredient ingredient={ingredient} key={index}/>))}
           </ul>
         <h4 className="recipesArray"> Recipes </h4>
           <ul className="recipesArray">
