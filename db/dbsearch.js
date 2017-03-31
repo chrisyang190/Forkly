@@ -8,6 +8,7 @@ var vagueWordRecipeSearch = function (searchWord) {
     // db.Recipe.find({'$and': [{'$or':[{name: {'$regex': searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]}, {'isPrivate': false}]})
     db.Recipe.find({'$or':[{name: {'$regex' : searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]})
     .where('isPrivate').equals(false)
+    .populate('_creator')
     .exec(function (err, recipes) {
       if (err) {
         reject(err);

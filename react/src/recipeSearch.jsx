@@ -77,7 +77,7 @@ class RecipeSearch extends React.Component {
   	return (
   	  <span className='results'>
         <div className='searchName'>
-          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
+          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{`${this.props.recipe._creator.name}'s ${this.props.recipe.name}`}</em></h3>
           <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
         </div>
           {message}
