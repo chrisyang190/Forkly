@@ -14,7 +14,7 @@ var vagueWordRecipeSearch = function (searchWord) {
         // console.log('erred while vague word search in db');
         reject(recipes);
       } else {
-        // console.log('recipes from db word vague: ', recipes);
+        console.log('recipes from db word vague: ', recipes);
         resolve(recipes);
       }
 	  });
@@ -24,40 +24,68 @@ var vagueWordRecipeSearch = function (searchWord) {
 
 module.exports.vagueWordRecipeSearch = vagueWordRecipeSearch;
 
-var vaguePhraseRecipeSearch = function (searchPhrase, callBack) {
+var vaguePhraseRecipeSearch = function (searchPhrase) {
 	let words = searchPhrase.split(' ');
 	let resultRecipes = [];
-	// console.log('words length: ', words.length);
+	console.log('searchPhrase: ', searchPhrase);
+	console.log('words length: ', words.length);
   return new Promise(function (resolve, reject) {
+
+    //getting exact search results now
     for (let i = 0; i < words.length; i++) {
-	    vagueWordRecipeSearch(words[i])
+	    exactWordRecipeSearch(words[i])
 	    .then((recipesArr) => {
-	    	// console.log('phrase vague search, recipesArr:', recipesArr);
+	    	console.log('exactWordRecipeSearch recipesArr: ', recipesArr);
 	    	for (let j = 0; j < recipesArr.length; j++) {
-	    	// 	console.log('phrase vague search, in for loop- recipesArr:', recipesArr);
-	    	// 	console.log('phrase vague search, in for loop- resultRecipes:', recipesArr);
-	    	  if (!resultRecipes.includes(recipesArr[j])) {
-	    		  // console.log('inside if of vague phrase saerch, recipesArr[i]: ', recipesArr[j]);
-	    		  resultRecipes.push(recipesArr[j]);
-	        }
-	        if (j === recipesArr.length - 1 && i === words.length - 1) {
-	        	resolve(resultRecipes);
+	    	  if (!resultRecipes.includes(JSON.stringify(recipesArr[j])))  {
+	    		  resultRecipes.push(JSON.stringify(recipesArr[j]));
 	        }
 	    	}
+	    })
+	    .then(() => {
+	    	//getting the vague search results now:
+    	  console.log('inside then - vague search starting now: - resultRecipes: ', resultRecipes);
+		    for (let l = 0; l < words.length; l++) {
+			    vagueWordRecipeSearch(words[l])
+			    .then((recipesArr1) => {
+			    	for (let m = 0; m < recipesArr1.length; m++) {
+			    	  if (!resultRecipes.includes(JSON.stringify(recipesArr1[m]))) {
+			    		  resultRecipes.push(JSON.stringify(recipesArr1[m]));
+			        }
+			    	}
+			    })
+			    .then(() => {
+			      console.log('final resultRecipes: ', resultRecipes);
+			    	resolve(resultRecipes);
+			    })
+			  }
 	    })
 	    .catch((err) => {
 	    	reject(resultRecipes);
 	    })
-
 	  }
-
   });
 }
 
-module.exports.vagueWordRecipeSearch = vagueWordRecipeSearch;
+module.exports.vaguePhraseRecipeSearch = vaguePhraseRecipeSearch;
 
 var exactWordRecipeSearch = function (searchWord) {
-  
+
+	console.log('inside exactWordRecipeSearch, search word: ', searchWord);
+  return new Promise((resolve, reject) => {
+    // db.Recipe.find({'$and': [{'$or':[{name: {'$regex': searchWord, '$options': 'i'}}, {'ingredients.ingredient': {'$regex':searchWord, '$options': 'i'}}, {'tags': {'$regex': searchWord, $options: 'i'}}]}, {'isPrivate': false}]})
+    db.Recipe.find({'$or':[{name: searchWord}, {'ingredients.ingredient': searchWord}, {'tags': searchWord}]})
+    .exec(function (err, recipes) {
+      if (err) {
+        reject(err);
+        console.log('erred while exact word search in db');
+        reject(recipes);
+      } else {
+        // console.log('recipes from db word exact: ', recipes);
+        resolve(recipes);
+      }
+	  });
+  });
 }
 
 module.exports.exactWordRecipeSearch = vagueWordRecipeSearch;

@@ -15,8 +15,11 @@ exports.searchRecipes = function(req, res) {
 
   dbSearch.vaguePhraseRecipeSearch(searchTerm).then((recipes) => {
     console.log('this is callback in handler: recipes: ', recipes);
-
-    res.json(recipes);
+    let jsonRecipes = [];
+    for (let i = 0; i < recipes.length; i++) {
+      jsonRecipes.push(JSON.parse(recipes[i]));
+    }
+    res.json(jsonRecipes);
   })
   .catch((err) => {
     console.log('errored out in handler');
