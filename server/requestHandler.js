@@ -11,8 +11,6 @@ exports.searchRecipes = function(req, res) {
   var searchTerm = req.body.searchTerm;
   // regex -> allows the search to contain string instead of === string
   // options i -> allows search to be case insensitive
-
-
   dbSearch.vaguePhraseRecipeSearch(searchTerm).then((recipes) => {
     console.log('this is callback in handler: recipes: ', recipes);
     let jsonRecipes = [];
@@ -42,6 +40,7 @@ exports.getUserRecipes = function(req, res) {
     db.User.findById(req.user._id)
     .populate('recipes')
     .exec(function(err, user) {
+      console.log(user)
       res.send(user.recipes);
     });
   } else {
@@ -182,22 +181,11 @@ if(req.user){
 }
 
 exports.getRecipeById = function(req, res) {
-  console.log('ID>>>>>>>>>>>>\n',req.body.id)
-  var retrievedRecipe; 
-  db.Recipe.findById(req.body.id)
-  .then((recipe) => {
-    retrievedRecipe = recipe;
-    console.log(retrievedRecipe._creator);
-    return recipe._creator;
-  })
-  .then((userId) => {
-    db.User.findById(userId)
-    .then((results)=>{
-      console.log(typeof retrievedRecipe);
-      retrievedRecipe.originator = results.name;
-      console.log(retrievedRecipe)
-      res.json(retrievedRecipe);
-    });
+  console.log('ID>>>>>>>>>>>>\n',req.query)
+  db.Recipe.findById(req.query.id)
+  .populate('_creator')
+  .exec((err, results)=>{
+    res.send(results);
   })
   .catch((err) => {
     console.log('error in finding ID');

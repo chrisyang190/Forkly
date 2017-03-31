@@ -14,13 +14,12 @@ class ViewFork extends React.Component {
     let pathname = this.context.router.route.location.pathname;
     let recipeId = pathname.slice(pathname.lastIndexOf('/') + 1);
     let boundThis = this;
+    console.log(recipeId)
      $.ajax({
       url: '/getRecipeById',
-      type:'POST',
-      data: JSON.stringify({id: recipeId}),
-      contentType: 'application/json',
+      type:'GET',
+      data: {id: recipeId},
       success: function(data){
-        console.log(data);
         boundThis.setState({recipe: data});
       },
       error: function(err) {
@@ -43,7 +42,7 @@ class ViewFork extends React.Component {
       template = 
       <div className="viewFork">
         <header>
-          <h1 className="recipeName">{recipe.name}</h1>
+          <h1 className="recipeName">{`${recipe._creator.name}'s ${recipe.name}`}</h1>
           <h1 className="recipeName">Tags:</h1>
         {recipe.tags.map(( tag => <p>{tag}</p>))}
           <br />
@@ -55,7 +54,7 @@ class ViewFork extends React.Component {
         </p>
         <br/>
         <h3 className="title"> Directions: </h3>
-        <p>{recipe.directions}</p>
+        {recipe.directions.map((dir, idx) => <p>Step {idx+1}: {dir}</p>)}
         <br />
         <button onClick={this.forkMe}>Fork Me</button>
 

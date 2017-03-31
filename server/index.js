@@ -73,7 +73,7 @@ app.get('/clearShoppingList', handler.clearShoppingList);
 
 app.get('/changeCheckbox', handler.changeCheckbox);
 
-app.post('/getRecipeById', handler.getRecipeById);
+app.get('/getRecipeById', handler.getRecipeById);
 
 app.listen(port, function() {
   console.log('listening on port '+ port + '!');

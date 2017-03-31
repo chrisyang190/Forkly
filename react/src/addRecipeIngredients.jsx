@@ -1,40 +1,65 @@
 import React from 'react';
+import CurrentRecipeIngredients from './currentRecipeIngredients.jsx';
+
 
 class AddRecipeIngredients extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      quantity: 0,
+      units: '', 
+      ingredient: '',
+      showButton: true
+    };
     this.handleChange = this.handleChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   handleChange(event) {
-    this.props.handleIngredientsChange(event, this.props.index)
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    this.setState({
+      [name]: value
+    });
   }
 
-  render () {
-    if (this.props.showButton) {
-      return (
-        <tbody>
-          <tr>
-            <td><input type="number" name="quantity" value={this.props.quantity} onChange={this.handleChange} /></td>
-            <td><input type="text" name="units" value={this.props.units} onChange={this.handleChange} /></td>
-            <td><input type="text" name="ingredient" value={this.props.ingredient} onChange={this.handleChange}/></td>
-            <td><input type="button" name="addRecipeNewRow" value="Add Row" onClick={this.props.addRow}/></td>
-          </tr>
-        </tbody>
-      )
-    } else {
-      return (
-        <tbody>
-          <tr>
-            <td><input type="number" name="quantity" value={this.props.quantity} onChange={this.handleChange} /></td>
-            <td><input type="text" name="units" value={this.props.units} onChange={this.handleChange} /></td>
-            <td><input type="text" name="ingredient" value={this.props.ingredient} onChange={this.handleChange}/></td>
-          </tr>
-        </tbody>
-      )
-    }
+  onClick() {
+    this.props.addRow(this.state);
+    this.setState({
+      quantity: 0,
+      units: '', 
+      ingredient: '',
+      showButton: true
+    });
   }
-}
+
+  render() {
+    return (
+      <tbody>
+        <tr>
+          <td><input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} /></td>
+          <td><input type="text" name="units" value={this.state.units} onChange={this.handleChange} /></td>
+          <td><input type="text" name="ingredient" value={this.state.ingredient} onChange={this.handleChange}/></td>
+          <td><input type="button" name="addRecipeNewRow" value="Add Row" onClick={this.onClick} /></td>
+        </tr>
+        <tr>
+          <td>ADD INGREDIENT</td>
+        </tr>
+        {this.props.ingArr.map((obj, idx) => 
+          <CurrentRecipeIngredients 
+            key={idx}
+            index={idx}
+            quantity={obj.quantity}
+            units={obj.units}
+            ingredient={obj.ingredient}
+            onClick={this.props.removeIng}
+            showButton={obj.showButton}
+          />
+        )}
+      </tbody>
+    )
+  }
+};
 
 export default AddRecipeIngredients;

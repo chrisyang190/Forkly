@@ -1,6 +1,8 @@
 import React from 'react';
 import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
+import AddStep from './addStep.jsx';
+import CurrentStep from './currentSteps.jsx';
 import $ from 'jquery';
 
 
@@ -10,17 +12,22 @@ class AddRecipe extends React.Component {
     super(props);
     this.state = {
       name: '',
-      directions: '',
+      directions: [],
       tags: [],
-      ingredients: [{quantity: 1, units: 'spoonful', ingredient: 'sugar', showButton: true}]
+      isPrivate: false, 
+      ingredients: []
     }
     this.tagCreate = '';
     this.addRow = this.addRow.bind(this);
     this.handleIngredientsChange = this.handleIngredientsChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePrivateChange = this.handlePrivateChange.bind(this);
     this.tagClick = this.tagClick.bind(this);
     this.removeTag = this.removeTag.bind(this);
+    this.removeIngredients = this.removeIngredients.bind(this);
+    this.removeStep = this.removeStep.bind(this);
+    this.addDirections = this.addDirections.bind(this);
   }
 
   componentDidMount () {
@@ -68,11 +75,15 @@ class AddRecipe extends React.Component {
     event.preventDefault();
   }
 
-  addRow() {
-    let myIngredients = this.state.ingredients;
-    myIngredients[myIngredients.length - 1].showButton = false;
-    myIngredients.push({quantity: 0, units: '', ingredient: '', showButton: true});
-    this.setState({ingredients: myIngredients});
+  addRow(ingObj){
+    let myIngredients = ingObj;
+    let myIngArr = this.state.ingredients
+
+    myIngredients.showButton = false;
+    myIngArr.push(ingObj);
+
+    this.setState({ingredients: myIngArr});
+    console.log(this.state.ingredients)
   }
 
   handleIngredientsChange (event, index) {
@@ -87,6 +98,12 @@ class AddRecipe extends React.Component {
     this.setState({
       ingredients: ing
     });
+  }
+
+  handlePrivateChange () {
+        console.log(this.state.isPrivate);
+    this.setState({isPrivate: !this.state.isPrivate});
+    console.log(this.state.isPrivate);
   }
 
   handleInputChange (event) {
@@ -108,12 +125,32 @@ class AddRecipe extends React.Component {
 
   removeTag(index){
     let tagArr = this.state.tags;
-
     tagArr.splice(index, 1);
     this.setState({tags: tagArr});
   }
 
-  
+  removeIngredients(index){
+    console.log(index)
+    let curIng = this.state.ingredients;
+    curIng.splice(index,1);
+    this.setState({ingredients: curIng});
+    console.log(this.state.ingredients)
+  }
+
+  removeStep(index) {
+    console.log(index);
+    let curDir = this.state.directions;
+    curDir.splice(index,1);
+    this.setState({directions: curDir});
+  }
+
+  addDirections(dir) {
+    let dirArr = this.state.directions;
+
+    dirArr.push(dir);
+    this.setState({directions:dirArr});
+    console.log(this.state.directions);
+  }
 
   render () {
     return (
@@ -144,23 +181,27 @@ class AddRecipe extends React.Component {
                 <td>Ingredient</td>
               </tr>
             </thead>
-            {this.state.ingredients.map(function(val, index) {
-               return <AddRecipeIngredients 
-                        key={index} 
-                        index={index} 
-                        quantity={val.quantity} 
-                        units={val.units} 
-                        ingredient={val.ingredient} 
-                        showButton={val.showButton} 
-                        addRow={this.addRow} 
-                        handleIngredientsChange={this.handleIngredientsChange}
-                      />;
-             }, this)}
+            <AddRecipeIngredients addRow={this.addRow} ingArr={this.state.ingredients} removeIng={this.removeIngredients} />
           </table>
           <br />
         
           <h3 className="title"> Directions: </h3>
-          <textarea name="directions" value={this.state.directions} onChange={this.handleInputChange}></textarea>
+          <table className="directions">
+            <thead>
+              <tr>
+                <td>Steps:</td>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.directions.map((dir, idx)=>(
+                <CurrentStep key={idx} index={idx} directions={dir} onClick={this.removeStep} />))} 
+              <AddStep index={this.state.directions.length+1} addDirections={this.addDirections}/>
+            </tbody>
+          </table>
+
+          <br/>
+          <label for="makePrivate">Make Private?</label>
+          <input type="checkbox" name="makePrivate" onChange={this.handlePrivateChange}/>
 
           <br />
 
