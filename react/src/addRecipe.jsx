@@ -194,7 +194,7 @@ class AddRecipe extends React.Component {
             </thead>
             <tbody>
               {this.state.directions.map((dir, idx)=>(
-                <CurrentStep key={idx} index={idx} directions={dir} onClick={this.removeStep} />))} 
+                <CurrentStep key={idx+dir} index={idx} directions={dir} onClick={this.removeStep} />))} 
               <AddStep index={this.state.directions.length+1} addDirections={this.addDirections}/>
             </tbody>
           </table>

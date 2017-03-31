@@ -48,7 +48,7 @@ class AddRecipeIngredients extends React.Component {
         </tr>
         {this.props.ingArr.map((obj, idx) => 
           <CurrentRecipeIngredients 
-            key={idx}
+            key={obj.units+obj.ingredient}
             index={idx}
             quantity={obj.quantity}
             units={obj.units}
