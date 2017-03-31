@@ -3,6 +3,7 @@ import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
 import CurrentRecipeIngredients from './currentRecipeIngredients.jsx';
 import AddStep from './addStep.jsx';
+import CurrentStep from './currentSteps.jsx';
 import $ from 'jquery';
 
 
@@ -26,6 +27,7 @@ class AddRecipe extends React.Component {
     this.tagClick = this.tagClick.bind(this);
     this.removeTag = this.removeTag.bind(this);
     this.removeIngredients = this.removeIngredients.bind(this);
+    this.removeStep = this.removeStep.bind(this);
     this.addDirections = this.addDirections.bind(this);
   }
 
@@ -140,8 +142,18 @@ class AddRecipe extends React.Component {
     this.setState({ingredients: curIng});
   }
 
-  addDirections() {
-    console.log('clicked');
+  removeStep(idx) {
+    let curDir = this.state.directions;
+    curDir.splice(idx,1);
+    this.setState({directions: curDir});
+  }
+
+  addDirections(dir) {
+    let dirArr = this.state.directions;
+
+    dirArr.push(dir);
+    this.setState({directions:dirArr});
+    console.log(this.state.directions);
   }
 
   render () {
@@ -194,7 +206,6 @@ class AddRecipe extends React.Component {
           <br />
         
           <h3 className="title"> Directions: </h3>
-          <textarea name="directions" value={this.state.directions} onChange={this.handleInputChange}></textarea>
           <table className="directions">
             <thead>
               <tr>
@@ -202,7 +213,9 @@ class AddRecipe extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <AddStep index={this.state.directions.length + 1 || 1} onClick={this.addDirections}/>
+              {this.state.directions.map((dir, idx)=>(
+                <CurrentStep key={idx} index={idx} directions={dir} onClick={this.removeStep} />))} 
+              <AddStep index={this.state.directions.length+1} addDirections={this.addDirections}/>
             </tbody>
           </table>
 
