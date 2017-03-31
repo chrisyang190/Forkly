@@ -75,6 +75,7 @@ class ViewShoppingList extends React.Component {
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
         <h1 className="myRecipesTitle">My Shopping List</h1>
+        <h1> Recipes </h1>
         <ul className="recipesArray">
           {recipesArray}
         </ul>
