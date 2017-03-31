@@ -54,7 +54,7 @@ class ViewFork extends React.Component {
         </p>
         <br/>
         <h3 className="title"> Directions: </h3>
-        <p>{recipe.directions}</p>
+        {recipe.directions.map((dir, idx) => <p>Step {idx+1}: {dir}</p>)}
         <br />
         <button onClick={this.forkMe}>Fork Me</button>
 

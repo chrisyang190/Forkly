@@ -136,10 +136,13 @@ class AddRecipe extends React.Component {
   }
 
   removeIngredients(idx){
-    console.log('clicked')
     let curIng = this.state.ingredients;
+    console.log(curIng[idx])
+
     curIng.splice(idx,1);
+    console.log(curIng);
     this.setState({ingredients: curIng});
+    console.log(this.state.ingredients)
   }
 
   removeStep(idx) {
