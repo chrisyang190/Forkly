@@ -98,10 +98,40 @@ exports.addToShoppingList = function(req, res) {
 
   console.log('req.query recipe from add to shopping list', req.query.recipe);
   if (req.user) {
-      db.User.findByIdAndUpdate(req.user._id, {$push: {shoppinglist: req.query.recipe._id}})
+    var ingredientsArray = req.query.recipe.ingredients;
+    console.log('ingredientsArray:', ingredientsArray);
+    var ingredientsObject = {};
+    // {
+    //   ingredient: {
+    //     quantity:,
+    //     unit:,
+    //     boolean:,
+    //   },
+    //   ingredient: {
+    //     quantity:,
+    //     unit:,
+    //     boolean:,
+    //   },
+    // }
+    for (var i = 0; i < ingredientsArray.length; i++) {
+      if (ingredientsObject[ingredientsArray[i].ingredient]) {
+        ingredientsObject[ingredientsArray[i].ingredient][quantity] = ingredientsObject[ingredientsArray[i].ingredient]['quantity'] + parseInt(ingredientsArray[i]['quantity']);
+      } else {
+        console.log('ingredient:', ingredientsArray[i].ingredient);
+        ingredientsObject[ingredientsArray[i].ingredient] = {'quantity': null, 'units': null, 'checked': null};
+        ingredientsObject[ingredientsArray[i].ingredient]['quantity'] = parseInt(ingredientsArray[i]['quantity']);
+        ingredientsObject[ingredientsArray[i].ingredient]['units'] = ingredientsArray[i]['units'];
+        ingredientsObject[ingredientsArray[i].ingredient]['checked'] = false;
+      } 
+    }
+
+    console.log('ingredientsObject', ingredientsObject);
+
+      db.User.findByIdAndUpdate(req.user._id, {$push: {shoppinglist: req.query.recipe._id}, shoppingingredients: ingredientsObject})
       .exec(() => {
         res.json(req.query.recipeId);
       })
+
   } else {
     res.end();
   }
