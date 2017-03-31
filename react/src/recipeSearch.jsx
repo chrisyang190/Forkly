@@ -83,12 +83,16 @@ class RecipeSearch extends React.Component {
           {message}
         <div className='ingredients'>
           <h4 className='searchIngredients'>Ingredients</h4>
-          <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+          <p>{this.props.recipe.ingredients.map((ingredient, index) => <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
         </div>
         <div>
           <h4 className='searchDirections'>Directions</h4>
+<<<<<<< HEAD
           <p>{this.props.recipe.directions}</p>
 
+=======
+          {this.props.recipe.directions.map((dir, idx)=> <p>Step {idx+1}:{dir}</p>) }
+>>>>>>> Working on fork create
         </div>
   	  </span>
   	)
