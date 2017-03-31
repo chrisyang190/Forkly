@@ -2,6 +2,7 @@ import React from 'react';
 import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
 import CurrentRecipeIngredients from './currentRecipeIngredients.jsx';
+import AddStep from './addStep.jsx';
 import $ from 'jquery';
 
 
@@ -11,7 +12,7 @@ class AddRecipe extends React.Component {
     super(props);
     this.state = {
       name: '',
-      directions: '',
+      directions: [],
       tags: [],
       isPrivate: false, 
       ingredients: []
@@ -25,6 +26,7 @@ class AddRecipe extends React.Component {
     this.tagClick = this.tagClick.bind(this);
     this.removeTag = this.removeTag.bind(this);
     this.removeIngredients = this.removeIngredients.bind(this);
+    this.addDirections = this.addDirections.bind(this);
   }
 
   componentDidMount () {
@@ -138,6 +140,10 @@ class AddRecipe extends React.Component {
     this.setState({ingredients: curIng});
   }
 
+  addDirections() {
+    console.log('clicked');
+  }
+
   render () {
     return (
       <div className="createRecipe">
@@ -196,9 +202,7 @@ class AddRecipe extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Step1: Do Shit</td>
-              </tr>
+              <AddStep index={this.state.directions.length + 1 || 1} onClick={this.addDirections}/>
             </tbody>
           </table>
 
