@@ -71,6 +71,8 @@ app.get('/addToShoppingList', handler.addToShoppingList);
 
 app.get('/clearShoppingList', handler.clearShoppingList);
 
+app.get('/changeCheckbox', handler.changeCheckbox);
+
 app.post('/getRecipeById', handler.getRecipeById);
 
 app.listen(port, function() {

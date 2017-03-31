@@ -2,7 +2,7 @@ import React from 'react';
 import RecipeIngredients from './recipeIngredients';
 import $ from 'jquery';
 
-class RecipeSearch extends React.Component {
+class RecipeList extends React.Component {
   constructor(props) {
   	super(props);
     this.state = {
@@ -10,32 +10,6 @@ class RecipeSearch extends React.Component {
     }
   }
 
-  setSearchTerm(searchTerm) {
-    this.setState({searchTerm: searchTerm});
-  }
-
-  searchRecipes(searchTerm) {
-    // send ajax request to server, which then searches db for searchTerm
-    var searchTerm = {searchTerm: this.state.searchTerm};
-    var context = this;
-
-    $.ajax({
-      url: '/searchRecipes',
-      type:'POST',
-      data: JSON.stringify(searchTerm),
-      contentType: 'application/json',
-      success: function(data){
-        console.log('ajax request was successful!');
-        console.log('response', data);
-        context.setState({recipes: data});
-        
-      },
-      error: function(err) {
-        console.log('ajax request failed');
-      }
-
-    });
-  };
 
   handleClick(recipeId) {
     const { router } = this.context
@@ -64,26 +38,16 @@ class RecipeSearch extends React.Component {
   render() {
     const isAdded = this.state.added;
     let message = null;
-    if (isAdded) {
-      message = <span> This recipe has been added to your shopping list </span>
-    } else {
-     
-    }
 
   	return (
   	  <span className='results'>
         <div className='searchName'>
           <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
-          <button onClick= {() => this.handleAdd(this.props.recipe)}>Add to Shopping List</button>
         </div>
           {message}
         <div className='ingredients'>
           <h4 className='searchIngredients'>Ingredients</h4>
           <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
-        </div>
-        <div>
-          <h4 className='searchDirections'>Directions</h4>
-          <p>{this.props.recipe.directions}</p>
         </div>
   	  </span>
   	)
@@ -91,8 +55,8 @@ class RecipeSearch extends React.Component {
 
 }
 
-RecipeSearch.contextTypes = {
+RecipeList.contextTypes = {
   router: React.PropTypes.object
 }
 
-export default RecipeSearch;
+export default RecipeList;

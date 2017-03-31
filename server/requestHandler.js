@@ -87,7 +87,8 @@ exports.getShoppingList = function(req, res) {
     db.User.findById(req.user._id)
     .populate('shoppinglist')
     .exec(function(err, user) {
-      res.send(user.shoppinglist);
+      console.log('user in getshoppinglist', user);
+      res.send({shoppinglist: user.shoppinglist, shoppingingredients: user.shoppingingredients});
     });
   } else {
     res.end();
@@ -140,6 +141,41 @@ exports.clearShoppingList = function(req, res) {
     .exec((err, user) => {
       res.send(user.shoppinglist);
     })
+  } else {
+    res.end();
+  }
+}
+
+exports.changeCheckbox = function(req, res) {
+  console.log('req.user', req.user);
+
+if(req.user){
+  console.log('request.query.ingredient in changeCheckbox', req.query.ingredient);
+  db.User.findById(req.user._id)
+  .then((user) => {
+    var temp = user.shoppingingredients;
+    temp[req.query.ingredient.ingredient]['checked'] = req.query.ingredient.checked;
+
+    console.log('temp:', temp);
+    return temp
+  })
+  .then((temp) => {
+    db.User.findByIdAndUpdate(req.user._id, {shoppingingredients: temp})
+      .then(() => {
+        res.status(200).send();
+      })
+  })
+  .catch((error) => {
+      console.log('error:', error);
+      res.status(500).send(error);
+    })
+
+
+  // if(req.user) {
+  //   db.User.findByIdAndUpdate(req.user._id, {shoppingingredients: null})
+  //   .exec((err, user) => {
+  //     res.send(user.shoppinglist);
+  //   })
   } else {
     res.end();
   }
