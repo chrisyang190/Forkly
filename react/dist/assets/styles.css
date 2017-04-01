@@ -187,6 +187,7 @@ body {
 
 .searchIngredient {
   font-size: 16px;
+  color: black;
 }
 
 /*
@@ -294,6 +295,15 @@ body {
   text-decoration: underline;
 }
 
+.info {
+  color: green;
+}
+
+.listTitle {
+  color: black;
+  padding: 10px;
+  font-size: 30px;
+}
 
 /*
   ========================================
