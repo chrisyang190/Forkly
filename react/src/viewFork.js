@@ -11,6 +11,7 @@ class ViewFork extends React.Component {
   }
 
   componentDidMount(){
+    console.log(this.props);
     let pathname = this.context.router.route.location.pathname;
     let recipeId = pathname.slice(pathname.lastIndexOf('/') + 1);
     let checkPath = pathname.split('/')[1];
@@ -62,7 +63,7 @@ class ViewFork extends React.Component {
         <h3 className="title"> Directions: </h3>
         {recipe.directions.map((dir, idx) => <p>Step {idx+1}: {dir}</p>)}
         <br />
-        {this.props.wasForked ? <button>Reset</button> : <button onClick={this.forkMe}>Fork Me</button>}
+        {this.props.wasForked ? null : <button onClick={this.forkMe}>Fork Me</button>}
 
       </div>
     } else {

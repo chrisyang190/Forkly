@@ -19,6 +19,7 @@ class Home extends React.Component {
   }
 
   searchRecipes(searchTerm) {
+    
     // send ajax request to server, which then searches db for searchTerm
     var searchTerm = {searchTerm: this.state.searchTerm};
     var context = this;

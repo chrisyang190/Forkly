@@ -3,7 +3,7 @@ import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
 import AddStep from './addStep.jsx';
 import CurrentStep from './currentSteps.jsx';
-import {} from 'react-router';
+import { Route } from 'react-router-dom';
 import $ from 'jquery';
 
 
@@ -32,7 +32,7 @@ class AddRecipe extends React.Component {
   }
 
   componentDidMount () {
-  
+    console.log(this.props)
     var forked = this.context.router.history.location.pathname;
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);
     let boundThis = this;
