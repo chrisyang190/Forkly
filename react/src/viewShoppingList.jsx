@@ -56,6 +56,12 @@ class ViewShoppingList extends React.Component {
     router.history.push('/recipe/' + recipeId);
   }
 
+  // removeShoppingRecipe(index) {
+  //   let currentRecipes = this.state.recipes;
+  //   currentRecipes.splice(index,1);
+  //   this.setState({recipes: currentRecipes});
+  // }
+
   clearShoppingList() {
     var context = this;
     $.ajax({
@@ -84,8 +90,8 @@ class ViewShoppingList extends React.Component {
 
       template = 
       <div className="myRecipes">
-        <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
-        <h1 className="myRecipesTitle">My Shopping List</h1>
+        <img className="myRecipeImage" src="assets/images/veggies.jpg"/>
+        <h1 className="myRecipesTitle">Shopping List</h1>
           <Grid>
             <Col md={6} mdPush={6}>
               <code>

@@ -79,6 +79,7 @@ class RecipeSearch extends React.Component {
           <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
         </div>
           {message}
+          
         <div className='ingredients'>
           <h4 className='searchIngredients'>Ingredients</h4>
           <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
@@ -86,6 +87,7 @@ class RecipeSearch extends React.Component {
         <div>
           <h4 className='searchDirections'>Directions</h4>
           <p>{this.props.recipe.directions}</p>
+
         </div>
   	  </span>
   	)
