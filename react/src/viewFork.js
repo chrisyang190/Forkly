@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import {matchPath} from 'react-router';
 
 import RecipeIngredients from './recipeIngredients'
 
@@ -7,9 +8,6 @@ class ViewFork extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      path: ''
-    }
     this.forkMe = this.forkMe.bind(this);
   }
 
@@ -23,11 +21,14 @@ class ViewFork extends React.Component {
       url: '/getRecipeById',
       type:'GET',
       data: {id: recipeId},
-      success: function(data){
+      success: (data)=>{
+        console.log(matchPath)
+        console.log(data)
         boundThis.setState({
           recipe: data,
-          path: 
+          path: checkPath
         });
+        console.log(this.state)
       },
       error: function(err) {
         console.error('could not retrieve any recipes for user');
@@ -36,7 +37,6 @@ class ViewFork extends React.Component {
   }
 
   forkMe() {
-    console.log(this.context)
     const { router } = this.context;
     var forked = router.route.location.pathname;
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);

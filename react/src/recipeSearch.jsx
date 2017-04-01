@@ -68,6 +68,8 @@ class RecipeSearch extends React.Component {
   render() {
     const isAdded = this.state.added;
     let message = null;
+    let name = this.props.recipe._creator.name;
+    let display = name === undefined ? 'My' : `${name}'s`
     if (isAdded) {
       message = <span className='info'> This recipe has been added to your shopping list </span>
     } else {
@@ -77,7 +79,7 @@ class RecipeSearch extends React.Component {
   	return (
   	  <span className='results'>
         <div className='searchName'>
-          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{`${this.props.recipe._creator.name}'s ${this.props.recipe.name}`}</em></h3>
+          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{`${display} ${this.props.recipe.name}`}</em></h3>
           <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
         </div>
           {message}
@@ -87,12 +89,7 @@ class RecipeSearch extends React.Component {
         </div>
         <div>
           <h4 className='searchDirections'>Directions</h4>
-<<<<<<< HEAD
-          <p>{this.props.recipe.directions}</p>
-
-=======
           {this.props.recipe.directions.map((dir, idx)=> <p>Step {idx+1}:{dir}</p>) }
->>>>>>> Working on fork create
         </div>
   	  </span>
   	)

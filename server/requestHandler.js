@@ -39,9 +39,10 @@ exports.getUserRecipes = function(req, res) {
   if (req.user) {
     db.User.findById(req.user._id)
     .populate('recipes')
+    .populate('_creator')
     .exec(function(err, user) {
       console.log(user)
-      res.send(user.recipes);
+      res.send(user);
     });
   } else {
     res.end();
