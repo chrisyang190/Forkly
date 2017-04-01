@@ -19,6 +19,7 @@ class Home extends React.Component {
   }
 
   searchRecipes(searchTerm) {
+    
     // send ajax request to server, which then searches db for searchTerm
     var searchTerm = {searchTerm: this.state.searchTerm};
     var context = this;
@@ -28,7 +29,7 @@ class Home extends React.Component {
       type:'POST',
       data: JSON.stringify(searchTerm),
       contentType: 'application/json',
-      success: function(data){
+      success: (data)=>{
         console.log('ajax request to search recipes was successful!');
         console.log('response', data);
         context.setState({recipes: data});

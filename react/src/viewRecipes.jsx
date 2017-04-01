@@ -16,7 +16,7 @@ class ViewRecipes extends React.Component {
       type:'GET',
       success: function(data){
         console.log('data from in getAllRecipes', data);
-        boundThis.setState({recipes: data});
+        boundThis.setState({recipes: data.recipes});
       },
       error: function(err) {
         console.log('could not retrieve any recipes for user');
@@ -36,7 +36,7 @@ class ViewRecipes extends React.Component {
     $.ajax({
       url: '/addToShoppingList',
       type: 'GET',
-      data: {'recipeId': recipeId},
+      data: {'recipeId': recipeId, name: data.name},
       success: function(data){
         console.log('successfully added to shopping list');
       },
@@ -51,13 +51,12 @@ class ViewRecipes extends React.Component {
     var template = '';
 
     if (this.state) {
-
       template = 
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
         <h1 className="myRecipesTitle">My Recipes</h1>
         <ul className="recipesArray">
-          {this.state.recipes.map((recipe, index) => <RecipeSearch recipe={recipe} key={index}/>)}
+          {this.state.recipes.map((recipe, index) => <RecipeSearch name={this.state.name} recipe={recipe} key={index}/>)}
         </ul>
         <br />
         <br />

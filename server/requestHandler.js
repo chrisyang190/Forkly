@@ -39,9 +39,10 @@ exports.getUserRecipes = function(req, res) {
   if (req.user) {
     db.User.findById(req.user._id)
     .populate('recipes')
+    .populate('_creator')
     .exec(function(err, user) {
       console.log(user)
-      res.send(user.recipes);
+      res.send(user);
     });
   } else {
     res.end();
@@ -235,7 +236,10 @@ if(req.user){
 exports.getRecipeById = function(req, res) {
   console.log('ID>>>>>>>>>>>>\n',req.query)
   db.Recipe.findById(req.query.id)
-  .populate('_creator')
+  .populate({
+    path: 'forked _creator',
+    populate: {path: '_creator'}
+  })
   .exec((err, results)=>{
     res.send(results);
   })

@@ -19,6 +19,7 @@ class RecipeSearch extends React.Component {
   }
 
   searchRecipes(searchTerm) {
+    console.log(this.props)
     // send ajax request to server, which then searches db for searchTerm
     var searchTerm = {searchTerm: this.state.searchTerm};
     var context = this;
@@ -68,6 +69,8 @@ class RecipeSearch extends React.Component {
   render() {
     const isAdded = this.state.added;
     let message = null;
+    let name = this.props.recipe._creator.name;
+    let display = name === undefined ? 'My' : `${name}'s`
     if (isAdded) {
       message = <span className='info'> This recipe has been added to your shopping list </span>
     } else {
@@ -77,18 +80,17 @@ class RecipeSearch extends React.Component {
   	return (
   	  <span className='results'>
         <div className='searchName'>
-          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
+          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{`${display} ${this.props.recipe.name}`}</em></h3>
           <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
         </div>
           {message}
         <div className='ingredients'>
           <h4 className='searchIngredients'>Ingredients</h4>
-          <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+          <p>{this.props.recipe.ingredients.map((ingredient, index) => <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
         </div>
         <div>
           <h4 className='searchDirections'>Directions</h4>
-          <p>{this.props.recipe.directions}</p>
-
+          {this.props.recipe.directions.map((dir, idx)=> <p>Step {idx+1}:{dir}</p>) }
         </div>
   	  </span>
   	)

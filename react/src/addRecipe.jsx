@@ -3,6 +3,7 @@ import AddRecipeIngredients from './addRecipeIngredients.jsx';
 import AddTag from './addTag.jsx';
 import AddStep from './addStep.jsx';
 import CurrentStep from './currentSteps.jsx';
+import { Route } from 'react-router-dom';
 import $ from 'jquery';
 
 
@@ -28,10 +29,11 @@ class AddRecipe extends React.Component {
     this.removeIngredients = this.removeIngredients.bind(this);
     this.removeStep = this.removeStep.bind(this);
     this.addDirections = this.addDirections.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount () {
-
+    console.log('clicked')
     var forked = this.context.router.history.location.pathname;
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);
     let boundThis = this;
@@ -40,25 +42,37 @@ class AddRecipe extends React.Component {
       console.log('hi');
       $.ajax({
         url: '/getRecipeById',
-        type:'POST',
-        data: JSON.stringify({id: forkedId}),
+        type:'GET',
+        data: {id: forkedId},
         contentType: 'application/json',
         success: function(data){
+          console.log(data);
           boundThis.setState({
             name: data.name,
             directions: data.directions,
-            ingredients: data.ingredients 
+            tags: data.tags,
+            ingredients: data.ingredients,
+            forked: forkedId,
           });
         },
         error: function(err) {
           console.error('could not retrieve any recipes for user');
         }
       });
+    } else {
+      this.setState({
+        name: '',
+        directions: [],
+        tags: [],
+        isPrivate: false, 
+        ingredients: []
+      });
     } 
   }
 
   handleSubmit (event) {
     const { router } = this.context
+    console.log(router)
     $.ajax({
       url: "/api/addRecipe",
       data: JSON.stringify(this.state),
@@ -68,6 +82,7 @@ class AddRecipe extends React.Component {
         if(recipeId === 11000){
           console.log("recipe already exists");
         } else {
+          console.log(recipeId)
           router.history.push('/recipe/' + recipeId);
         }
       }
@@ -153,14 +168,19 @@ class AddRecipe extends React.Component {
   }
 
   render () {
-    return (
-      <div className="createRecipe">
+    let header = (
+      <div>
         <header>
           <h1 className="recipeHeader">Create a Recipe</h1>
         </header>
-        <br />
+        <br/>
         <img className="recipeImage" src="assets/images/sushi.jpg" alt="sushi"/>
-        <br />
+        <br/>
+      </div>);
+
+    return (
+      <div className="createRecipe">
+        {this.props.wasForked ? null : header }
         <form onSubmit={this.handleSubmit}>
 
           <h3 className="recipeName">Recipe Name:</h3> 
@@ -194,7 +214,7 @@ class AddRecipe extends React.Component {
             </thead>
             <tbody>
               {this.state.directions.map((dir, idx)=>(
-                <CurrentStep key={idx} index={idx} directions={dir} onClick={this.removeStep} />))} 
+                <CurrentStep key={idx+dir} index={idx} directions={dir} onClick={this.removeStep} />))} 
               <AddStep index={this.state.directions.length+1} addDirections={this.addDirections}/>
             </tbody>
           </table>
@@ -207,7 +227,7 @@ class AddRecipe extends React.Component {
 
           <div>
             <input type="submit" name="addRecipeSave" value="Save" />
-            <input type="button" name="addRecipeCancel" value="Cancel" />
+            <input type="button" name="addRecipeReset" value="Reset" onClick={this.componentDidMount}/>
           </div>
         </form>
         <br/>

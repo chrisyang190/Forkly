@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Home from './home.jsx'
 import AddRecipe from './addRecipe.jsx';
 import Login from './login.jsx';
+import Test from './test.jsx';
 import ViewFork from './viewFork.js';
 import ViewRecipes from './viewRecipes.jsx';
 import ViewShoppingList from './viewShoppingList.jsx';
@@ -100,6 +101,7 @@ class App extends React.Component {
           <Route path="/shoppinglist" component={ViewShoppingList}/>
           <Route path="/myrecipes" component={ViewRecipes}/>
           <Route path="/recipe" component={ViewFork}/>
+          <Route path="/test" component={Test} />
         
           <br />
           <br />
