@@ -46,7 +46,6 @@ class RecipeList extends React.Component {
         </div>
           {message}
         <div className='ingredients'>
-          <h4 className='searchIngredients'>Ingredients</h4>
           <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
         </div>
   	  </span>

@@ -1,6 +1,8 @@
 import React from 'react';
 import RecipeIngredients from './recipeIngredients';
 import $ from 'jquery';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
 
 class RecipeSearch extends React.Component {
   constructor(props) {
@@ -65,7 +67,7 @@ class RecipeSearch extends React.Component {
     const isAdded = this.state.added;
     let message = null;
     if (isAdded) {
-      message = <span> This recipe has been added to your shopping list </span>
+      message = <span className='info'> This recipe has been added to your shopping list </span>
     } else {
      
     }
@@ -74,7 +76,7 @@ class RecipeSearch extends React.Component {
   	  <span className='results'>
         <div className='searchName'>
           <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
-          <button onClick= {() => this.handleAdd(this.props.recipe)}>Add to Shopping List</button>
+          <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
         </div>
           {message}
         <div className='ingredients'>

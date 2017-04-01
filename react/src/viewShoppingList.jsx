@@ -2,6 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import ShoppingRecipeIngredient from './recipeIngredientsShopping.jsx';
 import RecipeList from './recipeList.jsx';
+import Grid from 'react-bootstrap/lib/Grid.js'
+import Col from 'react-bootstrap/lib/Col.js'
 
 class ViewShoppingList extends React.Component {
   constructor(props) {
@@ -62,7 +64,8 @@ class ViewShoppingList extends React.Component {
       success: function(data){
         console.log('successfully cleared shopping list', data);
         context.setState({
-            recipes: []
+            recipes: [],
+            ingredients: []
         });
       },
       error: function(err) {
@@ -79,35 +82,30 @@ class ViewShoppingList extends React.Component {
 
     if (this.state) {
 
-      // for (var key in this.state.ingredients) {
-      //   var object = {
-      //     ingredient: null,
-      //     quantity: null,
-      //     units: null,
-      //     checked: null
-      //   }
-      //   object['ingredient'] = key;
-      //   object['quantity'] = this.state.ingredients[key]['quantity'];
-      //   object['units'] = this.state.ingredients[key]['units'];
-      //   object['checked'] = this.state.ingredients[key]['checked'];
-
-      //   ingredientsArray.push(object);
-
-      // }
-
       template = 
       <div className="myRecipes">
         <img className="myRecipeImage" src="assets/images/salmon.jpg"/>
         <h1 className="myRecipesTitle">My Shopping List</h1>
-        <h4 className="recipesArray"> Shopping List </h4>
-          <ul className="recipesArray">
-            {this.state.ingredients.map((ingredient, index) => (<ShoppingRecipeIngredient ingredient={ingredient} key={index}/>))}
-          </ul>
-        <h4 className="recipesArray"> Recipes </h4>
-          <ul className="recipesArray">
-            {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index}/>)}
-          </ul>
-          <button onClick = {() => this.clearShoppingList()}> Clear List </button>
+          <Grid>
+            <Col md={6} mdPush={6}>
+              <code>
+              <h4 className="listTitle"> Shopping List </h4>
+                  <ul className="recipesArray">
+                    {this.state.ingredients.map((ingredient, index) => (<ShoppingRecipeIngredient ingredient={ingredient} key={index}/>))}
+                  </ul>
+                <button onClick = {() => this.clearShoppingList()}> Clear List </button>
+              </code>
+            </Col>
+            <Col md={6} mdPull={6}>
+              <code>
+                <h4 className="listTitle"> Recipes </h4>
+                  <ul className="recipesArray">
+                    {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index}/>)}
+                  </ul>
+              </code>
+            </Col>
+          </Grid>
+
         <br />
         <br />
       </div>

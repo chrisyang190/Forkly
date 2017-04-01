@@ -1,6 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 import RecipeSearch from './recipeSearch.jsx';
+import Button from 'react-bootstrap/lib/Button';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import FormControl from 'react-bootstrap/lib/FormControl';
 
 class Home extends React.Component {
   constructor(props) {
@@ -36,23 +39,25 @@ class Home extends React.Component {
       }
     });
   };
-
+ // <h3>Yummly</h3>
   render() {
   	return (
   	  <div>
         <div className="search">
           <img className="searchImage" src="assets/images/steak.jpg" alt="steak"/>
           <span className="searchText">  
-            <h3>Yummly</h3>
-            <input type="text" 
+           
+            <FormGroup controlId="formBasicText">
+            <FormControl type="text" 
                    onKeyUp={ (event) => {
                               this.setSearchTerm(event.target.value)
                             }}
             />
-            <button onClick={(event) => {
+            <Button onClick={(event) => {
                               this.searchRecipes(this.state.searchTerm)
                             }}
-            >Search Recipes</button>
+            >Search Recipes</Button>
+            </FormGroup>
           </span>
         </div>
         
