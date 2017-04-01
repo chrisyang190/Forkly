@@ -22,7 +22,10 @@ var recipeSchema = mongoose.Schema({
   forked: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
   _creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 });
-
+//db.messages.createIndex({"subject":"text","content":"text"})
+//ignoring isprivate for now, weights too
+// recipeSchema.dropIndexes();
+recipeSchema.index({'name': 'text', 'tags': 'text', 'ingredients.ingredient': 'text'}, {weights: {name: 3, tags: 2, 'ingredients.ingredient': 1}});
 var Recipe = mongoose.model('Recipe', recipeSchema);
 
 module.exports.Recipe = Recipe;
@@ -36,6 +39,8 @@ var selectAllRecipes = function(callback) {
     }
   });
 };
+
+
 
 // User schema
 var userSchema = mongoose.Schema({
