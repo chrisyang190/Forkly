@@ -1,6 +1,10 @@
 import React from 'react';
 import RecipeIngredients from './recipeIngredients';
 import $ from 'jquery';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
+import Grid from 'react-bootstrap/lib/Grid.js'
+import Col from 'react-bootstrap/lib/Col.js'
 
 class RecipeList extends React.Component {
   constructor(props) {
@@ -35,23 +39,49 @@ class RecipeList extends React.Component {
     })
   }
 
+
+
+  // render() {
+  //   const isAdded = this.state.added;
+  //   let message = null;
+
+  // 	return (
+  // 	  <span className='results'>
+  //       <div className='searchName'>
+  //         <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
+  //         <Button bsSize="small" onClick= {() => this.props.removeShoppingRecipe(this.props.key)}><Glyphicon glyph="minus" /> </Button>
+  //       </div>
+  //         {message}
+  //       <div className='ingredients'>
+  //         <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+  //       </div>
+  // 	  </span>
+  // 	)
+  // }
+
   render() {
     const isAdded = this.state.added;
     let message = null;
 
-  	return (
-  	  <span className='results'>
-        <div className='searchName'>
-          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
-        </div>
-          {message}
-        <div className='ingredients'>
-          <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
-        </div>
-  	  </span>
-  	)
+    return (
+      <span className='results'>
+        <Grid>
+          <Col md={2}>
+            <div className='searchName'>
+              <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
+            </div>
+              {message}
+            <div className='ingredients'>
+              <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+            </div>
+          </Col>
+          <Col md={2}>
+              <Button bsSize="small" onClick= {() => this.props.removeShoppingRecipe(this.props.key)}><Glyphicon glyph="minus" /> </Button>
+          </Col>
+        </Grid>
+      </span>
+    )
   }
-
 }
 
 RecipeList.contextTypes = {

@@ -69,6 +69,8 @@ app.get('/getShoppingList', handler.getShoppingList);
 
 app.get('/addToShoppingList', handler.addToShoppingList);
 
+app.get('/removeShoppingRecipe', handler.removeShoppingRecipe);
+
 app.get('/clearShoppingList', handler.clearShoppingList);
 
 app.get('/changeCheckbox', handler.changeCheckbox);

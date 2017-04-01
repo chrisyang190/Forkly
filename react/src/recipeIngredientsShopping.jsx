@@ -4,7 +4,6 @@ import $ from 'jquery';
 class ShoppingRecipeIngredient extends React.Component {
   constructor(props) {
     super(props);
-    console.log('this.props.ingredient.checked', this.props.ingredient.checked);
     this.state = {
       ingredient: this.props.ingredient,
       checked: JSON.parse(this.props.ingredient.checked)
