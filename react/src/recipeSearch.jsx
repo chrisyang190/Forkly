@@ -3,6 +3,8 @@ import RecipeIngredients from './recipeIngredients';
 import $ from 'jquery';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
+import Grid from 'react-bootstrap/lib/Grid.js';
+import Col from 'react-bootstrap/lib/Col.js';
 
 class RecipeSearch extends React.Component {
   constructor(props) {
@@ -79,7 +81,6 @@ class RecipeSearch extends React.Component {
           <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
         </div>
           {message}
-          
         <div className='ingredients'>
           <h4 className='searchIngredients'>Ingredients</h4>
           <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
@@ -91,6 +92,36 @@ class RecipeSearch extends React.Component {
         </div>
   	  </span>
   	)
+
+    // return (
+    //   <span className='results'>
+    //     <Grid> 
+          
+    //       <Col xs={6} md={4}>
+    //         <code>
+    //           <div className='searchName'>
+    //             <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{this.props.recipe.name}</em></h3>
+    //             <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
+    //           </div>
+    //             {message}
+    //           <div className='ingredients'>
+    //             <h4 className='searchIngredients'>Ingredients</h4>
+    //             <p>{this.props.recipe.ingredients.map((ingredient, index)=> <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+    //           </div>
+    //           <div>
+    //             <h4 className='searchDirections'>Directions</h4>
+    //             <p>{this.props.recipe.directions}</p>
+    //           </div>
+    //         </code>
+    //       </Col>
+    //       <Col xs={12} md={8}>
+    //         <code>
+    //           <img src="assets/images/roastedchicken.jpg" />
+    //         </code>
+    //       </Col>
+    //     </Grid>
+    //   </span>
+    // )
   }
 
 }
