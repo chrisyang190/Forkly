@@ -56,11 +56,35 @@ class ViewShoppingList extends React.Component {
     router.history.push('/recipe/' + recipeId);
   }
 
-  // removeShoppingRecipe(index) {
-  //   let currentRecipes = this.state.recipes;
-  //   currentRecipes.splice(index,1);
-  //   this.setState({recipes: currentRecipes});
-  // }
+  removeShoppingRecipe(index) {
+    let currentRecipes = this.state.recipes;
+    var removed = currentRecipes.splice(index,1);
+    console.log('removed:', removed);
+    console.log('currentRecipes', currentRecipes);
+    this.setState({recipes: currentRecipes});
+
+    var context = this;
+    $.ajax({
+      url:'/removeShoppingRecipe',
+      type: 'GET',
+      data: {
+        'recipes': currentRecipes,
+        'removed': removed
+      },
+      success: function(data) {
+        // context.setState({
+        // })
+        console.log('data from removeShopping Recipe', data);
+        context.componentDidMount();
+      },
+      error: function(err) {
+        console.log('errored in removing Shopping Recipe:', err);
+      }
+    })
+
+
+
+  }
 
   clearShoppingList() {
     var context = this;
@@ -93,21 +117,21 @@ class ViewShoppingList extends React.Component {
         <img className="myRecipeImage" src="assets/images/veggies.jpg"/>
         <h1 className="myRecipesTitle">Shopping List</h1>
           <Grid>
-            <Col md={6} mdPush={6}>
+            <Col md={6}>
+              <code>
+                <h4 className="listTitle"> Recipes </h4>
+                  <ul className="recipesArray">
+                    {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index} removeShoppingRecipe={this.removeShoppingRecipe.bind(this)}/>)}
+                  </ul>
+              </code>
+            </Col>
+            <Col md={6}>
               <code>
               <h4 className="listTitle"> Shopping List </h4>
                   <ul className="recipesArray">
                     {this.state.ingredients.map((ingredient, index) => (<ShoppingRecipeIngredient ingredient={ingredient} key={index}/>))}
                   </ul>
                 <button onClick = {() => this.clearShoppingList()}> Clear List </button>
-              </code>
-            </Col>
-            <Col md={6} mdPull={6}>
-              <code>
-                <h4 className="listTitle"> Recipes </h4>
-                  <ul className="recipesArray">
-                    {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index}/>)}
-                  </ul>
               </code>
             </Col>
           </Grid>

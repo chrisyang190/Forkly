@@ -86,7 +86,6 @@ exports.getShoppingList = function(req, res) {
     db.User.findById(req.user._id)
     .populate('shoppinglist')
     .exec(function(err, user) {
-      console.log('user in getshoppinglist', user);
       res.send({shoppinglist: user.shoppinglist, shoppingingredients: user.shoppingingredients});
     });
   } else {
@@ -133,6 +132,58 @@ exports.addToShoppingList = function(req, res) {
   }
 };
 
+exports.removeShoppingRecipe = function (req, res) {
+  console.log('req.query in removeShopping Recipe', req.query)
+  if(req.user) {
+
+    db.User.findById(req.user._id)
+    .then((user) => {
+    
+    var ingredientsArray = req.query.removed[0].ingredients;
+    console.log('ingredientsArray:', ingredientsArray);
+    var ingredientsObject = user['shoppingingredients'] || {};
+
+    for (var i = 0; i < ingredientsArray.length; i++) {
+      if (ingredientsObject[ingredientsArray[i].ingredient]) {
+        ingredientsObject[ingredientsArray[i].ingredient]['quantity'] = ingredientsObject[ingredientsArray[i].ingredient]['quantity'] - parseInt(ingredientsArray[i]['quantity']);
+        if (ingredientsObject[ingredientsArray[i].ingredient]['quantity'] === 0){
+          delete ingredientsObject[ingredientsArray[i].ingredient];
+        }
+      } else {
+        console.log('ingredient:', ingredientsArray[i].ingredient);
+        ingredientsObject[ingredientsArray[i].ingredient] = {'quantity': null, 'units': null, 'checked': null};
+        ingredientsObject[ingredientsArray[i].ingredient]['quantity'] = parseInt(ingredientsArray[i]['quantity']);
+        ingredientsObject[ingredientsArray[i].ingredient]['units'] = ingredientsArray[i]['units'];
+        ingredientsObject[ingredientsArray[i].ingredient]['checked'] = false;
+      } 
+    }
+      return ingredientsObject;
+    }) 
+
+    .then((ingredients) => {
+      var recipeIDs = [];
+      for (var i = 0; i <req.query.recipes.length; i++) {
+        recipeIDs.push(req.query.recipes[i]._id);
+      }
+      console.log('recipeIDs:', recipeIDs);
+      db.User.findByIdAndUpdate(req.user._id, {shoppinglist: recipeIDs, shoppingingredients: ingredients})
+      .then((user) => {
+        res.status(200).json(user);
+      })
+    })
+    // .then((user) => {
+    //   res.status(200).json(user);
+    // })
+    .catch((error) => {
+      console.log('error:', error);
+      res.status(500).send(error);
+    })
+
+  } else {
+    res.end();
+  }
+}
+
 exports.clearShoppingList = function(req, res) {
 
   if(req.user) {
@@ -144,6 +195,7 @@ exports.clearShoppingList = function(req, res) {
     res.end();
   }
 }
+
 
 exports.changeCheckbox = function(req, res) {
   console.log('req.user', req.user);
