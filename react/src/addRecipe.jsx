@@ -180,7 +180,7 @@ class AddRecipe extends React.Component {
 
     return (
       <div className="createRecipe">
-        {this.props.wasForked ? <h1>Edit Forked Recipe</h1> : header }
+        {this.props.wasForked ? null : header }
         <form onSubmit={this.handleSubmit}>
 
           <h3 className="recipeName">Recipe Name:</h3> 
