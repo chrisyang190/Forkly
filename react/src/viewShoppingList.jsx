@@ -121,7 +121,7 @@ class ViewShoppingList extends React.Component {
               <code>
                 <h4 className="listTitle"> Recipes </h4>
                   <ul className="recipesArray">
-                    {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index} removeShoppingRecipe={this.removeShoppingRecipe.bind(this)}/>)}
+                    {this.state.recipes.map((recipe, index) => <RecipeList recipe={recipe} key={index+recipe} removeShoppingRecipe={this.removeShoppingRecipe.bind(this)}/>)}
                   </ul>
               </code>
             </Col>
