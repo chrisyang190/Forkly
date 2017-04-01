@@ -53,7 +53,8 @@
     "react-router": "^4.0.0-alpha.4",
     "react-router-dom": "^4.0.0",
     "request": "^2.81.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "datamuse": "1.0.5"
   },
   "scripts": {
     "react-dev": "webpack -d --watch",

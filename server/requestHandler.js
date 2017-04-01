@@ -13,11 +13,7 @@ exports.searchRecipes = function(req, res) {
   // options i -> allows search to be case insensitive
   dbSearch.vaguePhraseRecipeSearch(searchTerm).then((recipes) => {
     console.log('this is callback in handler: recipes: ', recipes);
-    let jsonRecipes = [];
-    for (let i = 0; i < recipes.length; i++) {
-      jsonRecipes.push(JSON.parse(recipes[i]));
-    }
-    res.json(jsonRecipes);
+    res.json(recipes);
   })
   .catch((err) => {
     console.log('errored out in handler');
