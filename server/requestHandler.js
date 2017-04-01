@@ -236,7 +236,10 @@ if(req.user){
 exports.getRecipeById = function(req, res) {
   console.log('ID>>>>>>>>>>>>\n',req.query)
   db.Recipe.findById(req.query.id)
-  .populate('_creator')
+  .populate({
+    path: 'forked _creator',
+    populate: {path: '_creator'}
+  })
   .exec((err, results)=>{
     res.send(results);
   })

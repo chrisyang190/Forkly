@@ -50,6 +50,7 @@ class ViewFork extends React.Component {
       <div className="viewFork">
         <header>
           <h1 className="recipeName">{`${recipe._creator.name}'s ${recipe.name}`}</h1>
+          {this.state.recipe.forked ? <h4>{`Forked From ${this.state.recipe.forked._creator.name}'s ${this.state.recipe.forked.name}`}</h4> : null}
           <h1 className="recipeName">Tags:</h1>
         {recipe.tags.map(( tag => <p>{tag}</p>))}
           <br />

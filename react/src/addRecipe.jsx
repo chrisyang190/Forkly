@@ -29,9 +29,11 @@ class AddRecipe extends React.Component {
     this.removeIngredients = this.removeIngredients.bind(this);
     this.removeStep = this.removeStep.bind(this);
     this.addDirections = this.addDirections.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount () {
+    console.log('clicked')
     var forked = this.context.router.history.location.pathname;
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);
     let boundThis = this;
@@ -57,6 +59,14 @@ class AddRecipe extends React.Component {
           console.error('could not retrieve any recipes for user');
         }
       });
+    } else {
+      this.setState({
+        name: '',
+        directions: [],
+        tags: [],
+        isPrivate: false, 
+        ingredients: []
+      });
     } 
   }
 
@@ -72,6 +82,7 @@ class AddRecipe extends React.Component {
         if(recipeId === 11000){
           console.log("recipe already exists");
         } else {
+          console.log(recipeId)
           router.history.push('/recipe/' + recipeId);
         }
       }
@@ -216,7 +227,7 @@ class AddRecipe extends React.Component {
 
           <div>
             <input type="submit" name="addRecipeSave" value="Save" />
-            <input type="button" name="addRecipeCancel" value="Cancel" />
+            <input type="button" name="addRecipeReset" value="Reset" onClick={this.componentDidMount}/>
           </div>
         </form>
         <br/>
