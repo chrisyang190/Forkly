@@ -10,9 +10,10 @@ class ViewFork extends React.Component {
     this.forkMe = this.forkMe.bind(this);
     this.goToFork = this.goToFork.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.getRecipe = this.getRecipe.bind(this);
   }
 
-  componentDidMount(){
+  getRecipe(){
     console.log(this.props);
     let pathname = this.props.location.pathname;
     let recipeId = pathname.slice(pathname.lastIndexOf('/') + 1);
@@ -37,9 +38,9 @@ class ViewFork extends React.Component {
     });
   }
 
-  componentDidUpdate() {
+  componentDidMount(){
     console.log(this.props);
-    let pathname = this.props.location.pathname;
+    let pathname = this.context.router.route.location.pathname;
     let recipeId = pathname.slice(pathname.lastIndexOf('/') + 1);
     let checkPath = pathname.split('/')[1];
     let boundThis = this;
@@ -55,6 +56,27 @@ class ViewFork extends React.Component {
           path: checkPath
         });
         console.log(this.state)
+      },
+      error: function(err) {
+        console.error('could not retrieve any recipes for user');
+      }
+    });
+  }
+
+  componentWillUpdate() {
+    let pathname = this.context.router.route.location.pathname;
+    let recipeId = pathname.slice(pathname.lastIndexOf('/') + 1);
+    let checkPath = pathname.split('/')[1];
+    let boundThis = this;
+     $.ajax({
+      url: '/getRecipeById',
+      type:'GET',
+      data: {id: recipeId},
+      success: (data)=>{
+        this.setState({
+          recipe: data,
+          path: checkPath
+        });
       },
       error: function(err) {
         console.error('could not retrieve any recipes for user');
@@ -72,9 +94,8 @@ class ViewFork extends React.Component {
   goToFork(){
     console.log('clicked', this.props)
     const { router } = this.context;
-    console.log(router.history.push)
     router.history.push(`/recipe/${this.state.recipe.forked._id}`);
-    this.componentDidMount();
+    // this.componentDidMount();
   }
 
   render () {
