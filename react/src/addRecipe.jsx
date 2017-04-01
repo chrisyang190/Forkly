@@ -30,6 +30,8 @@ class AddRecipe extends React.Component {
     this.removeStep = this.removeStep.bind(this);
     this.addDirections = this.addDirections.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleIngredientsEdit = this.handleIngredientsEdit.bind(this);
+    this.handleStepEdit = this.handleStepEdit.bind(this);
   }
 
   componentDidMount () {
@@ -167,6 +169,20 @@ class AddRecipe extends React.Component {
     console.log(this.state.directions);
   }
 
+  handleIngredientsEdit(idx, obj){
+    let ingArr = this.state.ingredients;
+
+    ingArr[idx] = obj;
+    this.setState({ingredients: ingArr});
+  }
+
+  handleStepEdit(idx, dir) {
+    let dirArr = this.state.directions;
+
+    dirArr[idx] = dir.directions;
+    this.setState({directions: dirArr})
+  }
+
   render () {
     let header = (
       <div>
@@ -201,7 +217,7 @@ class AddRecipe extends React.Component {
                 <td>Ingredient</td>
               </tr>
             </thead>
-            <AddRecipeIngredients addRow={this.addRow} ingArr={this.state.ingredients} removeIng={this.removeIngredients} />
+            <AddRecipeIngredients addRow={this.addRow} ingArr={this.state.ingredients} removeIng={this.removeIngredients} handleIngredientsEdit={this.handleIngredientsEdit}/>
           </table>
           <br />
         
@@ -214,7 +230,7 @@ class AddRecipe extends React.Component {
             </thead>
             <tbody>
               {this.state.directions.map((dir, idx)=>(
-                <CurrentStep key={idx+dir} index={idx} directions={dir} onClick={this.removeStep} />))} 
+                <CurrentStep key={idx+dir} index={idx} directions={dir} onClick={this.removeStep} handleStepEdit={this.handleStepEdit} />))} 
               <AddStep index={this.state.directions.length+1} addDirections={this.addDirections}/>
             </tbody>
           </table>

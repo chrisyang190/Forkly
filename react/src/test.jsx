@@ -19,12 +19,12 @@ class Test extends React.Component {
     return(
       <div>
         <Grid>
-          <Col md={6} mdPush={6}>
+          <Col md={4} >
             <code>
               <ViewFork wasForked={true}/>
             </code>
           </Col>
-          <Col md={6} mdPull={6}>
+          <Col md={4} >
             <code>
               <AddRecipe wasForked={true}/>
             </code>
