@@ -54,6 +54,7 @@ class AddRecipeIngredients extends React.Component {
             units={obj.units}
             ingredient={obj.ingredient}
             onClick={this.props.removeIng}
+            handleIngredientsEdit={this.props.handleIngredientsEdit}
             showButton={obj.showButton}
           />
         )}

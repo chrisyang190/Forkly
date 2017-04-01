@@ -28,6 +28,7 @@ class CurrentSteps extends React.Component {
       <tr>
         <td>Step {this.props.index + 1}:<input type="text" name="directions" value={this.state.directions} onChange={this.handleChange} /></td>
         <td><input type="button" name="removeRecipe" value="Remove Step" onClick={this.remove} /></td>
+        <td><input type="button" name="editRecipe" value="Edit Step" onClick={()=>{this.props.handleStepEdit(this.props.index, this.state)}} /></td>
       </tr>
     )
   }

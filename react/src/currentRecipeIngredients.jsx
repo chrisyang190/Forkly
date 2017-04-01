@@ -34,6 +34,7 @@ class CurrentIngredients extends React.Component {
         <td><input type="text" name="units" value={this.state.units} onChange={this.handleChange} /></td>
         <td><input type="text" name="ingredient" value={this.state.ingredient} onChange={this.handleChange}/></td>
         <td><input type="button" name="addRecipeNewRow" value="Remove Row" onClick={()=>{this.props.onClick(this.props.index)}} /></td>
+        <td><input type="button" name="editRecipeRow" value="Edit Row" onClick={()=>{this.props.handleIngredientsEdit(this.props.index, this.state)}} /></td>
       </tr>
     )
   }
