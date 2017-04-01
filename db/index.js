@@ -14,12 +14,13 @@ db.once('open', function() {
 
 var recipeSchema = mongoose.Schema({
   // dropDups will drop duplicates. will need to restart mongo router for these to kick in
-  name: {type: String, unique: true, required: true},
+  name: {type: String, required: true},
   ingredients: Array,
   directions: Array,
   tags: Array,
   isPrivate: Boolean, 
-  _creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+  forked: {type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'},
+  _creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 });
 
 var Recipe = mongoose.model('Recipe', recipeSchema);

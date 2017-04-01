@@ -32,11 +32,9 @@ class AddRecipe extends React.Component {
   }
 
   componentDidMount () {
-    console.log(this.props)
     var forked = this.context.router.history.location.pathname;
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);
     let boundThis = this;
-    console.log(forkedId)
     // if history has url at end
     if (forkedId !== 'addrecipe') {
       console.log('hi');
@@ -51,7 +49,8 @@ class AddRecipe extends React.Component {
             name: data.name,
             directions: data.directions,
             tags: data.tags,
-            ingredients: data.ingredients 
+            ingredients: data.ingredients,
+            forked: forkedId,
           });
         },
         error: function(err) {
@@ -63,6 +62,7 @@ class AddRecipe extends React.Component {
 
   handleSubmit (event) {
     const { router } = this.context
+    console.log(router)
     $.ajax({
       url: "/api/addRecipe",
       data: JSON.stringify(this.state),
