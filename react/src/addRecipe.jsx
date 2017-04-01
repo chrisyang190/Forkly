@@ -35,15 +35,17 @@ class AddRecipe extends React.Component {
     var forked = this.context.router.history.location.pathname;
     let forkedId = forked.slice(forked.lastIndexOf('/') + 1);
     let boundThis = this;
+    console.log(forkedId)
     // if history has url at end
     if (forkedId !== 'addrecipe') {
       console.log('hi');
       $.ajax({
         url: '/getRecipeById',
-        type:'POST',
-        data: JSON.stringify({id: forkedId}),
+        type:'GET',
+        data: {id: forkedId},
         contentType: 'application/json',
         success: function(data){
+          console.log(data);
           boundThis.setState({
             name: data.name,
             directions: data.directions,
@@ -153,14 +155,19 @@ class AddRecipe extends React.Component {
   }
 
   render () {
-    return (
-      <div className="createRecipe">
+    let header = (
+      <div>
         <header>
           <h1 className="recipeHeader">Create a Recipe</h1>
         </header>
-        <br />
+        <br/>
         <img className="recipeImage" src="assets/images/sushi.jpg" alt="sushi"/>
-        <br />
+        <br/>
+      </div>);
+
+    return (
+      <div className="createRecipe">
+        {this.props.wasForked ? <h1>Edit Forked Recipe</h1> : header }
         <form onSubmit={this.handleSubmit}>
 
           <h3 className="recipeName">Recipe Name:</h3> 

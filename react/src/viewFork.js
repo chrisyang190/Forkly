@@ -1,6 +1,5 @@
 import React from 'react';
 import $ from 'jquery';
-import {matchPath} from 'react-router';
 
 import RecipeIngredients from './recipeIngredients'
 
@@ -22,7 +21,6 @@ class ViewFork extends React.Component {
       type:'GET',
       data: {id: recipeId},
       success: (data)=>{
-        console.log(matchPath)
         console.log(data)
         boundThis.setState({
           recipe: data,
@@ -64,7 +62,7 @@ class ViewFork extends React.Component {
         <h3 className="title"> Directions: </h3>
         {recipe.directions.map((dir, idx) => <p>Step {idx+1}: {dir}</p>)}
         <br />
-        <button onClick={this.forkMe}>Fork Me</button>
+        {this.props.wasForked ? <button>Reset</button> : <button onClick={this.forkMe}>Fork Me</button>}
 
       </div>
     } else {
