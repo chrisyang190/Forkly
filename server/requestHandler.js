@@ -159,8 +159,10 @@ exports.removeShoppingRecipe = function (req, res) {
 
     .then((ingredients) => {
       var recipeIDs = [];
-      for (var i = 0; i <req.query.recipes.length; i++) {
-        recipeIDs.push(req.query.recipes[i]._id);
+      if(req.query.recipes) {
+        for (var i = 0; i <req.query.recipes.length; i++) {
+          recipeIDs.push(req.query.recipes[i]._id);
+        }
       }
       console.log('recipeIDs:', recipeIDs);
       db.User.findByIdAndUpdate(req.user._id, {shoppinglist: recipeIDs, shoppingingredients: ingredients})
