@@ -76,7 +76,7 @@ class RecipeList extends React.Component {
             </div>
           </Col>
           <Col md={2}>
-              <Button bsSize="small" onClick= {() => this.props.removeShoppingRecipe(this.props.key)}><Glyphicon glyph="minus" /> </Button>
+              <Button bsSize="small" onClick= {() => this.props.removeShoppingRecipe(this.props.index)}><Glyphicon glyph="minus" /> </Button>
           </Col>
         </Grid>
       </span>

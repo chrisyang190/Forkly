@@ -79,19 +79,25 @@ class RecipeSearch extends React.Component {
 
   	return (
   	  <span className='results'>
-        <div className='searchName'>
-          <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{`${display} ${this.props.recipe.name}`}</em></h3>
-          <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
-        </div>
-          {message}
-        <div className='ingredients'>
-          <h4 className='searchIngredients'>Ingredients</h4>
-          <p>{this.props.recipe.ingredients.map((ingredient, index) => <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
-        </div>
-        <div>
-          <h4 className='searchDirections'>Directions</h4>
-          {this.props.recipe.directions.map((dir, idx)=> <p>Step {idx+1}:{dir}</p>) }
-        </div>
+        <Grid>
+          <Col md={2}>
+            <div className='searchName'>
+              <h3 onClick={() => this.handleClick(this.props.recipe._id)}><em>{`${display} ${this.props.recipe.name}`}</em></h3>
+            </div>
+              {message}
+            <div className='ingredients'>
+              <h4 className='searchIngredients'>Ingredients</h4>
+              <p>{this.props.recipe.ingredients.map((ingredient, index) => <RecipeIngredients ingredient={ingredient} key={index}/>)}</p>
+            </div>
+            <div>
+              <h4 className='searchDirections'>Directions</h4>
+              {this.props.recipe.directions.map((dir, idx)=> <p>Step {idx+1}:{dir}</p>) }
+            </div>
+          </Col>
+          <Col md={2}>
+              <Button bsSize="small" onClick= {() => this.handleAdd(this.props.recipe)}><Glyphicon glyph="shopping-cart" /> </Button>
+          </Col>
+        </Grid>
   	  </span>
   	)
 
