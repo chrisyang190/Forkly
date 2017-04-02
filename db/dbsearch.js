@@ -138,6 +138,7 @@ var fullTextSearch = function (searchPhrase) {
 	    	score: { $meta : 'textScore' } 
 	    }
 		)
+    .populate('_creator')
 		.exec(function (err, recipes) {
       if (err) {
       	console.log('err in search: ', err);
