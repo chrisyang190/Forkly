@@ -167,7 +167,13 @@ body {
   text-decoration-style: bold;
   font-size: 90px;
 }
+.searchTextForm {
+  position: relative;
+  top: -140px;
+  text-align: center;
+  width: 100%;
 
+}
 .results {
   padding: 20px;
   top: -50px;

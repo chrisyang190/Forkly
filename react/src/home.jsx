@@ -46,20 +46,26 @@ class Home extends React.Component {
   	  <div>
         <div className="search">
           <img className="searchImage" src="assets/images/steak.jpg" alt="steak"/>
-          <span className="searchText">  
-           
-            <FormGroup controlId="formBasicText">
-            <FormControl type="text" 
-                   onKeyUp={ (event) => {
-                              this.setSearchTerm(event.target.value)
-                            }}
-            />
-            <Button onClick={(event) => {
-                              this.searchRecipes(this.state.searchTerm)
-                            }}
-            >Search Recipes</Button>
-            </FormGroup>
+          <span className="searchText">
+            <div className="searchTextHeading">  
+              <h3>Yummly</h3>
+            </div>
           </span>
+          <div className="searchTextForm">
+          <span>
+          <FormGroup controlId="formBasicText">
+          <FormControl type="text" 
+                 onKeyUp={ (event) => {
+                            this.setSearchTerm(event.target.value)
+                          }}
+          />
+          <Button onClick={(event) => {
+                            this.searchRecipes(this.state.searchTerm)
+                          }}
+          >Search Recipes</Button>
+          </FormGroup>
+          </span>
+          </div>
         </div>
         
         <div className="results">
